@@ -1,3 +1,6 @@
+import '@babel/polyfill'
+import { uploadFile } from "./test";
+
 const mkDateTime = (message) => {
   const date = new Date();
   const dateJST = date.getFullYear()
@@ -30,10 +33,14 @@ const generateUuid = ()=> {
  * @return {void}
  */
 const pixelDepth=(message, dateJst)=> {
-  const scrollTop = document.documentElement.scrollTop
+
+  let scrollTop = document.documentElement.scrollTop
+  
+  console.log("--------------------")
+  console.log('サーバに送信しないよ')
+  console.log("--------------------")
   console.log(
-  `id:${uuid}`
-  , `スクロールした回数:${scrollCount}`
+  `スクロールした回数:${scrollCount}`
   ,`読了率:${Math.round(((scrollTop+Number(clienth))/h)*100)}%`
   , `${message}:${dateJst}`
   , `トップからのスクロール位置:${scrollTop}`
@@ -41,6 +48,26 @@ const pixelDepth=(message, dateJst)=> {
   , `画面表示の高さ${clienth}`
   , `見えていない高さ${Number(h)-Number(clienth)}`)
 
+  console.log("--------------------")
+  console.log('サーバに送信する情報2')
+  console.log("--------------------")
+  let scrollJson = {
+    "id":uuid
+    ,"url":url
+    ,"referrer":referrer
+    ,"ua":ua
+    ,"startdatetime":startdateJst
+    ,"enddatetime":""
+    ,"scroll":scrollTop
+    ,"documentheight":h
+    ,"clientheight":clienth
+    ,"x":""
+    ,"y":""
+    ,"ex":x
+  }
+
+  console.log(scrollJson)
+  resultJson.scroll.push(scrollJson)
 
   // while (scrollTop >= greatestScrollTop + 500) {
   //   greatestScrollTop += settings.pixelDepthInterval
@@ -58,11 +85,36 @@ const pixelDepth=(message, dateJst)=> {
 const uuid = generateUuid()
 const h = document.documentElement.scrollHeight;  // ドキュメントの高さ
 const clienth = document.documentElement.clientHeight;  //高さ
+const url = location.href ;
+const ua = window.navigator.userAgent.toLowerCase();
+const x = 'ここにサイト情報など'
+const referrer = document.referrer
+
+const resultJson = {start:[],scroll:[],click:[],end:[]}
 
 console.log("--------------------")
-const [message, startdateJst, startdate] = mkDateTime('起動時間')
-console.log("ドキュメントの全体の高さ",h, "画面表示の高さ", clienth, "見えていない高さ", Number(h)-Number(clienth))
-console.log(message, startdateJst)
+const [startmessage, startdateJst, startdate] = mkDateTime('起動時間')
+console.log(startmessage, startdateJst)
+console.log("--------------------")
+console.log('サーバに送信する情報1')
+console.log("--------------------")
+let startJson = {
+  id:uuid
+  ,url:url
+  ,referrer:referrer
+  ,ua:ua
+  ,startdatetime:startdateJst
+  ,enddatetime:""
+  ,scroll:0
+  ,documentheight:h
+  ,clientheight:clienth
+  ,x:""
+  ,y:""
+  ,ex:x
+}
+console.log(startJson)
+resultJson.start.push(startJson)
+console.log(resultJson)
 console.log("--------------------")
 
 // 画面遷移時の処理
@@ -72,7 +124,30 @@ window.addEventListener("beforeunload",(e) => {
   console.log(endmessage, enddateJst)
   console.log("--------------------")
 
-  console.log("ドキュメントの全体の高さ",h, "画面表示の高さ", clienth, "見えていない高さ", Number(h)-Number(clienth))
+  let scrollTop = document.documentElement.scrollTop
+
+  console.log("--------------------")
+  console.log('サーバに送信する情報3')
+  console.log("--------------------")
+
+  let endJson = {
+    "id":uuid
+    ,"url":url
+    ,"referrer":referrer
+    ,"ua":ua
+    ,"startdatetime":startdateJst
+    ,"enddatetime":enddateJst
+    ,"scroll":scrollTop
+    ,"documentheight":h
+    ,"clientheight":clienth
+    ,"x":""
+    ,"y":""
+    ,"ex":x
+  }
+  console.log(endJson)
+  resultJson.end.push(endJson)
+
+  uploadFile(resultJson)
   let confirmMessage = '離脱するの？';
   e.returnValue = confirmMessage;
   return confirmMessage;
@@ -85,6 +160,29 @@ window.addEventListener("scroll",() => {
   scrollCount++
   const [message, dateJst, enddate] = mkDateTime('スクロールしたよ')
   pixelDepth(message, dateJst)
+})
+
+let mX;
+let mY;
+window.addEventListener("click",(e)=>{
+  mX = e.pageX;  //X座標
+  mY = e.pageY;  //Y座標
+  let scrollTop = document.documentElement.scrollTop
+
+  let clickJson = {
+    "id":uuid
+    ,"url":url
+    ,"ua":ua
+    ,"startdatetime":startdateJst
+    ,"enddatetime":""
+    ,"scroll":scrollTop
+    ,"documentheight":h
+    ,"clientheight":clienth
+    ,"x":mX
+    ,"y":mY
+    ,"ex":x
+  }
+  resultJson.end.push(clickJson)
 })
 
 
@@ -105,3 +203,4 @@ window.addEventListener("scroll",() => {
 //   elementAction         : 'Element Depth',
 //   nonInteraction        : true,
 // }, settings)
+

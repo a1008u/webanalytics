@@ -1,5 +1,6 @@
 import '@babel/polyfill'
 import { uploadFile } from "./test";
+const uuidv4 = require('uuid/v4');
 
 const mkDateTime = (message) => {
   const date = new Date();
@@ -13,27 +14,13 @@ const mkDateTime = (message) => {
   return [message, dateJST, date]
 }
 
-const generateUuid = ()=> {
-  let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
-  for (let i = 0, len = chars.length; i < len; i++) {
-      switch (chars[i]) {
-          case "x":
-              chars[i] = Math.floor(Math.random() * 16).toString(16);
-              break;
-          case "y":
-              chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
-              break;
-      }
-  }
-  return chars.join("");
-}
-
 /**
  * Push an event when the user has scrolled past each pixelDepthInterval
  * @return {void}
  */
 const pixelDepth=(message, dateJst)=> {
 
+  const [startmessage, scrolldateJst, startdate] = mkDateTime('スクロールたいみんぐ')
   let scrollTop = document.documentElement.scrollTop
   
   console.log("--------------------")
@@ -53,16 +40,10 @@ const pixelDepth=(message, dateJst)=> {
   console.log("--------------------")
   let scrollJson = {
     "id":uuid
-    ,"url":url
-    ,"referrer":referrer
-    ,"ua":ua
-    ,"startdatetime":startdateJst
-    ,"enddatetime":""
+    ,"scrolldatetime":scrolldateJst
     ,"scroll":scrollTop
     ,"documentheight":h
     ,"clientheight":clienth
-    ,"x":""
-    ,"y":""
     ,"ex":x
   }
 
@@ -82,7 +63,7 @@ const pixelDepth=(message, dateJst)=> {
   // }
 }
 
-const uuid = generateUuid()
+const uuid = uuidv4();
 const h = document.documentElement.scrollHeight;  // ドキュメントの高さ
 const clienth = document.documentElement.clientHeight;  //高さ
 const url = location.href ;
@@ -96,7 +77,7 @@ console.log("--------------------")
 const [startmessage, startdateJst, startdate] = mkDateTime('起動時間')
 console.log(startmessage, startdateJst)
 console.log("--------------------")
-console.log('サーバに送信する情報1')
+console.log('サーバに送信する情報1(ページにアクセスしたタイミング)')
 console.log("--------------------")
 let startJson = {
   id:uuid
@@ -108,8 +89,6 @@ let startJson = {
   ,scroll:0
   ,documentheight:h
   ,clientheight:clienth
-  ,x:""
-  ,y:""
   ,ex:x
 }
 console.log(startJson)
@@ -140,8 +119,6 @@ window.addEventListener("beforeunload",(e) => {
     ,"scroll":scrollTop
     ,"documentheight":h
     ,"clientheight":clienth
-    ,"x":""
-    ,"y":""
     ,"ex":x
   }
   console.log(endJson)
@@ -165,24 +142,20 @@ window.addEventListener("scroll",() => {
 let mX;
 let mY;
 window.addEventListener("click",(e)=>{
+  const [startmessage, clickdateJst, startdate] = mkDateTime('クリックしたタイミング')
   mX = e.pageX;  //X座標
   mY = e.pageY;  //Y座標
   let scrollTop = document.documentElement.scrollTop
 
   let clickJson = {
     "id":uuid
-    ,"url":url
-    ,"ua":ua
-    ,"startdatetime":startdateJst
-    ,"enddatetime":""
+    ,"clickdatetime":clickdateJst
     ,"scroll":scrollTop
-    ,"documentheight":h
-    ,"clientheight":clienth
     ,"x":mX
     ,"y":mY
     ,"ex":x
   }
-  resultJson.end.push(clickJson)
+  resultJson.click.push(clickJson)
 })
 
 

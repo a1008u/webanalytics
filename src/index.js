@@ -1,5 +1,6 @@
 import '@babel/polyfill'
 import { uploadJson } from "./upload";
+import axios from "axios";
 import { mkDateTime, pixelDepth, clickDepth } from "./common";
 const uuidv4 = require('uuid/v4');
 
@@ -13,7 +14,7 @@ const x = 'ここにサイト情報など'
 const referrer = document.referrer
 
 // 計測用のJSON最終形態
-const resultJson = {start:[],scroll:[],click:[],end:[]}
+const resultJson = {start:[],scroll:0,click:[],end:[]}
 
 // js起動時間の確認
 console.log("--------------------")
@@ -42,7 +43,7 @@ console.log('startに格納するJSON',startJson,'計測用のJSON最終形態',
 console.log("--------------------")
 
 // 画面遷移時の処理
-window.addEventListener("beforeunload", async (e) => {
+window.addEventListener("unload", async (e) => {
   console.log("--------------------")
   const [endmessage, enddateJst, enddate] = mkDateTime('終了時間')
   console.log(endmessage, enddateJst)
@@ -74,15 +75,13 @@ window.addEventListener("beforeunload", async (e) => {
 
   const localUrl = "http://127.0.0.1:8080/json"
   const gaeurl = "https://rugged-baton-234609.appspot.com/json"
-  const result = await uploadJson(localUrl, resultJson)
-  if (!result) {
-    console.log('エラー')
-  }　else {
-    const confirmMessage = '離脱するの？';
-    e.returnValue = confirmMessage;
-    return confirmMessage;
-  }
-
+  if("sendBeacon" in navigator) {
+      navigator.sendBeacon(gaeurl, JSON.stringify(resultJson));
+    }else{
+      const rq = new XMLHttpRequest();
+      rq.open("POST",  gaeurl, false);
+      rq.send(resultJson);
+    }
 }, false);
 
 
@@ -90,11 +89,13 @@ window.addEventListener("beforeunload", async (e) => {
 // scrollの処理
 let scrollCount =　0
 window.addEventListener("scroll", async() => {
-  const scrollJson = await pixelDepth(++scrollCount, clienth, h)
-  console.log("scrollJson --- ",scrollJson)
-  resultJson.scroll.push(scrollJson)
+  const scrollTop = await pixelDepth(++scrollCount, clienth, h)
+  if (resultJson.scroll < scrollTop) {
+    console.log("resultJson.scroll --- ", resultJson.scroll)
+    console.log("scrollTop --- ", scrollTop)
+    resultJson.scroll = scrollTop
+  } 
 })
-
 
 
 

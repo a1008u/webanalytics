@@ -70,7 +70,7 @@ async function clickDepth(e) {
     let scrollTop = document.documentElement.scrollTop;
     let clickJson = {
       // "id":uuid,
-      "clickdatetime": clickdateJst,
+      // "clickdatetime": clickdateJst,
       "scroll": scrollTop,
       "x": mX,
       "y": mY

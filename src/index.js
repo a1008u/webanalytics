@@ -36,7 +36,7 @@ let startJson = {
   ,scroll:0
   ,documentheight:h
   ,clientheight:clienth
-  ,ex:x
+  // ,ex:x
 }
 resultJson.start.push(startJson)
 console.log('startに格納するJSON',startJson,'計測用のJSON最終形態',resultJson)
@@ -56,16 +56,9 @@ window.addEventListener("unload", async (e) => {
   console.log("--------------------")
 
   let endJson = {
-    "id":uuid
-    ,"url":url
-    ,"referrer":referrer
-    ,"ua":ua
-    ,"startdatetime":startdateJst
-    ,"enddatetime":enddateJst
-    ,"scroll":scrollTop
+    "enddatetime":enddateJst
     ,"documentheight":h
     ,"clientheight":clienth
-    ,"ex":x
   }
   resultJson.end.push(endJson)
   console.log('endに格納するJSON',endJson,'計測用のJSON最終形態',resultJson)

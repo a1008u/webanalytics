@@ -1,6 +1,4 @@
 import '@babel/polyfill'
-import { uploadJson } from "./upload";
-import axios from "axios";
 import { mkDateTime, pixelDepth, clickDepth } from "./common";
 const uuidv4 = require('uuid/v4');
 
@@ -10,11 +8,10 @@ const h = document.documentElement.scrollHeight;  // ドキュメントの高さ
 const clienth = document.documentElement.clientHeight;  //高さ
 const url = location.href ;
 const ua = window.navigator.userAgent.toLowerCase();
-const x = 'ここにサイト情報など'
 const referrer = document.referrer
 
-// 計測用のJSON最終形態
-const resultJson = {start:[],scroll:0,click:[],end:[]}
+// 計測用のJSON最終形態(start、end、scroll、clickは下記で追加する。)
+const resultJson = {}
 
 // js起動時間の確認
 console.log("--------------------")
@@ -26,21 +23,24 @@ console.log("--------------------")
 console.log("--------------------")
 console.log('サーバに送信する情報1(ページにアクセスしたタイミング)')
 console.log("--------------------")
-let startJson = {
-  id:uuid
-  ,url:url
-  ,referrer:referrer
-  ,ua:ua
-  ,startdatetime:startdateJst
-  ,enddatetime:""
-  ,scroll:0
-  ,documentheight:h
-  ,clientheight:clienth
-  // ,ex:x
+const userJson ={
+  "id":uuid
+  ,"url":url
+  ,"referrer":referrer
+  ,"ua":ua
 }
-resultJson.start.push(startJson)
+resultJson.user = userJson
+
+const startJson = {
+  "datetime":startdateJst
+  ,"scrollTop":0
+  ,"documentheight":h
+  ,"clientheight":clienth
+}
+resultJson.start = startJson
 console.log('startに格納するJSON',startJson,'計測用のJSON最終形態',resultJson)
 console.log("--------------------")
+
 
 // 画面遷移時の処理
 window.addEventListener("unload", async (e) => {
@@ -49,22 +49,16 @@ window.addEventListener("unload", async (e) => {
   console.log(endmessage, enddateJst)
   console.log("--------------------")
 
-  let scrollTop = document.documentElement.scrollTop
-
   console.log("--------------------")
   console.log('サーバに送信する情報3')
   console.log("--------------------")
 
-  let endJson = {
-    "enddatetime":enddateJst
+  const endJson = {
+    "datetime":enddateJst
     ,"documentheight":h
-    ,"clientheight":clienth
   }
-  resultJson.end.push(endJson)
+  resultJson.end = endJson;
   console.log('endに格納するJSON',endJson,'計測用のJSON最終形態',resultJson)
-
-  // S3へのアップロード
-  // uploadFile(resultJson)
 
   const localUrl = "http://127.0.0.1:8080/json"
   const gaeurl = "https://rugged-baton-234609.appspot.com/json"
@@ -82,41 +76,27 @@ window.addEventListener("unload", async (e) => {
 // scrollの処理
 let scrollCount =　0
 window.addEventListener("scroll", async() => {
-  const scrollTop = await pixelDepth(++scrollCount, clienth, h)
-  if (resultJson.scroll < scrollTop) {
-    console.log("resultJson.scroll --- ", resultJson.scroll)
-    console.log("scrollTop --- ", scrollTop)
-    resultJson.scroll = scrollTop
-  } 
+
+  let scrollJson = await pixelDepth(++scrollCount, clienth, h)
+
+  if (resultJson.scroll === undefined) {
+    // 初回用
+    resultJson.scroll = scrollJson
+  } else {
+    console.log("resultJson.scroll.scrollTop --- ", resultJson.scroll.scrollTop)
+    console.log("scrollJson.scrollTop --- ", scrollJson.scrollTop)
+    if (resultJson.scroll.scrollTop < scrollJson.scrollTop) {
+      resultJson.scroll = scrollJson
+    } 
+  }
 })
 
 
 
 // click時の処理
+resultJson.click = []
 window.addEventListener("click", async(e) => {
   const clickJson = await clickDepth(e);
   resultJson.click.push(clickJson)
   console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
 })
-
-
-
-
-// let greatestScrollTop = 0
-// let settings = Object.assign({
-//   throttle              : 250,
-//   minHeight             : 0,
-//   scrollElement         : document.documentElement,
-//   percentages           : [0.25, 0.5, 0.75, 0.9, 0.95, 0.99],
-//   pixelDepthInterval    : 500,
-//   elements              : [],
-//   dataLayer             : window.dataLayer,
-//   trackerName           : '',
-//   eventName             : 'CustomEvent',
-//   eventCategory         : 'Scroll Depth',
-//   percentageDepthAction : 'Percentage Depth',
-//   pixelDepthAction      : 'Pixel Depth',
-//   elementAction         : 'Element Depth',
-//   nonInteraction        : true,
-// }, settings)
-

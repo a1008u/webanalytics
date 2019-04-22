@@ -19,15 +19,13 @@ const mkDateTime = (message) => {
 async function pixelDepth(scrollCount, clienth, h){
 
     const [startmessage, scrolldateJst, startdate] = mkDateTime('スクロールたいみんぐ')
-    let scrollTop = document.documentElement.scrollTop
-
     const scroll = {
       "documentheight": document.documentElement.scrollHeight,
       "scrollTop": document.documentElement.scrollTop,
       "clientHeight": document.documentElement.clientHeight
     };
     
-    console.log("--------------------")
+    console.log("--------------------", scroll)
     // console.log('サーバに送信しないよ')
     // console.log("--------------------")
     // console.log(

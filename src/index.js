@@ -1,10 +1,13 @@
 import '@babel/polyfill'
-import { mkDateTime, pixelDepth, clickDepth } from "./common";
-const uuidv4 = require('uuid/v4');
+import { mkDateTime, pixelDepth, clickDepth, getUid } from "./common";
+import { changeQuery } from "./query";
+
 
 async function main(){
+  const uidKey = "_atuid"
+  const uuid = await getUid(uidKey)
 
-  const uuid = uuidv4();
+  // const uuid = uuidv4();
   const h = document.documentElement.scrollHeight;  // ドキュメントの高さ
   const clienth = document.documentElement.clientHeight;  //高さ
   const url = location.href ;
@@ -55,10 +58,10 @@ async function main(){
     const gaeurl = "https://rugged-baton-234609.appspot.com/json"
     // const gaeurl = "https://ck-how-2-use.appspot.com/json"
     if("sendBeacon" in navigator) {
-        navigator.sendBeacon(gaeurl, JSON.stringify(resultJson));
+        navigator.sendBeacon(localUrl, JSON.stringify(resultJson));
       }else{
         const rq = new XMLHttpRequest();
-        rq.open("POST",  gaeurl, false);
+        rq.open("POST",  localUrl, false);
         rq.send(resultJson);
       }
   }, false);
@@ -86,40 +89,5 @@ async function main(){
   })
 
 }
-
-
-// async function modifyQuerry(atag){
-//   if(atag.getAttribute('href').includes("attestat")) {
-//     return true;
-//   }
-//   return false;
-// }
-
-async function changeQuery(queryKey, queryValue){
-  [].forEach.call(document.getElementsByTagName('a'), aTag => {
-    const targetAtagHref = aTag.getAttribute('href');
-    const need = (aTag.getAttribute('href').includes("attestat"))? true: false;
-
-  
-    if (need) {
-      const exQuery = `${queryKey}=${queryValue}`
-      if (targetAtagHref.indexOf('#') !== -1) {
-        let [url, hash] = aTag.getAttribute('href').split('#');
-        aTag.href =
-          targetAtagHref.indexOf('?') !== -1
-            ? `${url}&${exQuery}#${hash}`
-            : `${url}?${exQuery}#${hash}`;
-      } else {
-        aTag.href =
-          targetAtagHref.indexOf('?') === -1
-            ? `${targetAtagHref}?${exQuery}`
-            : `${targetAtagHref}&${exQuery}`;
-      }
-    }
-
-  })
-
-}
-
 
 main()

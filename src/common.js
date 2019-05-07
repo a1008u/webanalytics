@@ -1,3 +1,7 @@
+import { getLocalStorage, storeInLocalStorage} from "./localstorage";
+import { getQueryTargetKeyValue } from "./query";
+const uuidv4 = require('uuid/v4');
+
 // 作業時間を作成
 const mkDateTime = (message) => {
     const date = new Date();
@@ -56,4 +60,29 @@ async function clickDepth(e) {
     return clickJson;
   }
 
-  export {mkDateTime, pixelDepth, clickDepth}
+  // userIdの取得
+  async function getUid(uidKey) {
+
+    // localstorageck
+    const atuid = getLocalStorage("_atuid")
+    if(atuid){
+      console.log("local storageから取得 : ", atuid)
+      return atuid;
+    }
+  
+    // paramck
+    const queryUid = getQueryTargetKeyValue(location.search.substring(1), "userid=")
+    if(queryUid){
+      console.log("paramから取得 : ", queryUid)
+      storeInLocalStorage(queryUid)
+      return queryUid;
+    }
+  
+    const uuid = uuidv4()
+    console.log("uuidv4()から取得 : ", uuid)
+    storeInLocalStorage(uuid)
+    return uuid
+  }
+  
+
+  export {mkDateTime, pixelDepth, clickDepth, getUid}

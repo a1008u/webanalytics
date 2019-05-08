@@ -1,71 +1,11 @@
 import '@babel/polyfill'
-import { mkDateTime, pixelDepth, clickDepth, getUid } from "./common";
+import { pixelDepth, clickDepth, getPageno, closeExec} from "./common";
 import { changeQuery, deleteQuery } from "./query";
-import { getQueryTargetKeyValue } from "./query";
+import { init } from "./init";
+import { storeInCookie} from "./cookie";
 
-async function closeExec(resultJson, h) {
-  console.log("イベントタイプ--------------------", event.type);
-  const enddateJst = await mkDateTime();
-  const endJson = {
-    "datetime": enddateJst,
-    "documentheight": h
-  };
-  resultJson.end = endJson;
-  console.log('endに格納するJSON', endJson, '計測用のJSON最終形態', resultJson);
-  const localUrl = "http://127.0.0.1:8080/json";
-  const gaeurl = "https://rugged-baton-234609.appspot.com/json";
-  // const gaeurl = "https://ck-how-2-use.appspot.com/json"
-  if ("sendBeacon" in navigator) {
-    navigator.sendBeacon(gaeurl, JSON.stringify(resultJson));
-  }
-  else {
-    const rq = new XMLHttpRequest();
-    rq.open("POST", gaeurl, false);
-    rq.send(resultJson);
-  }
-}
-
-// 初期化
-async function init(resultJson, h, clienth){
-
-  const uidKey = "_atuid";
-
-  const uuid = await getUid(uidKey)
-  const url = location.href ;
-  const ua = window.navigator.userAgent.toLowerCase();
-  const referrer = document.referrer
-
-  // scroll初期化
-  resultJson.scroll = await pixelDepth(clienth, h)
-
-  // click初期化
-  resultJson.click = []
-
-  // js起動時間の確認
-  const startdateJst = await mkDateTime('起動時間')
-
-  // 1.アクセスした時間を作成し、計測用のJSON最終形態のstartに追加
-  // user初期化
-  const userJson = {
-    "id":uuid
-    ,"url":url
-    ,"referrer":referrer
-    ,"ua":ua
-  }
-  resultJson.user = userJson
-
-  // startJson初期化
-  const startJson = {
-    "datetime":startdateJst
-    ,"scrollTop":0
-    ,"documentheight":h
-    ,"clientheight":clienth
-  }
-  resultJson.start = startJson
-}
 
 async function main(){
-  
   // 再利用変数（画面遷移時とタブがvisibleの時に代入されます。）
   let h, clienth;
 
@@ -73,20 +13,17 @@ async function main(){
   h = document.documentElement.scrollHeight;  // ドキュメントの高さ
   clienth = document.documentElement.clientHeight;  //高さ
   let resultJson = {}
-  resultJson.start = await init(resultJson, h, clienth);
+  await init(resultJson, h, clienth);
   console.log('計測用のJSON最終形態',resultJson)
 
   // ページ遷移番号
-  const pageNo = getQueryTargetKeyValue(location.search.substring(1), "atpno=")
-  if (pageNo) {
-    resultJson.pageno = String(Number(pageNo) + 1)
-  } else {
-    resultJson.pageno = "1"
-  }
+  resultJson.pageno = await getPageno("_atpno", "atpno=")
   console.log("pageNo : ",resultJson.pageno)
-  // ancher elementのquery書き換え
+
+  // ancher elementのquery書き換え（初期化後の処理）
   changeQuery("index2","userid", resultJson.user.id)
   changeQuery("index2","atpno", resultJson.pageno)
+  storeInCookie(resultJson.pageno)
 
 
   // 画面遷移時の処理
@@ -125,10 +62,11 @@ async function main(){
       let resultJson = {}
       resultJson.start = await init(resultJson, h, clienth);
       resultJson.pageno = "1"
+      storeInCookie(resultJson.pageno)
 
       // ancher elementのquery書き換え
-      deleteQuery("index2","atpno")
-      changeQuery("index2","atpno", resultJson.pageno)
+      await deleteQuery("index2","atpno")
+      await changeQuery("index2","atpno", resultJson.pageno)
     }
   });
 }

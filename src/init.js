@@ -27,10 +27,10 @@ async function init(resultJson, h, clienth, func){
     ,"url":url
     ,"referrer":referrer
     ,"ua":ua
-    ,"pageno": await func("_atpno", "atpno=")
+    // ,"pageno": await func("_atpno", "atpno=")
   }
   resultJson.user = userJson
-  storeInCookie(resultJson.user.pageno)
+  // storeInCookie(resultJson.user.pageno)
 
   // startJson初期化
   const startJson = {

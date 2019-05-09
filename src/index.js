@@ -22,7 +22,7 @@ async function main(){
 
   // ancher elementのquery書き換え（初期化後の処理）
   changeQuery("index2","userid", resultJson.user.id)
-  changeQuery("index2","atpno", resultJson.pageno)
+  // changeQuery("index2","atpno", resultJson.pageno)
   
   // 画面遷移時の処理
   // window.addEventListener("unload", async (e) => {
@@ -65,8 +65,8 @@ async function main(){
       await init(resultJson, h, clienth, getVisiblePageno);
 
       // ancher elementのquery書き換え
-      await deleteQuery("index2","atpno")
-      await changeQuery("index2","atpno", resultJson.pageno)
+      // await deleteQuery("index2","atpno")
+      // await changeQuery("index2","atpno", resultJson.pageno)
     }
   });
 }

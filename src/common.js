@@ -84,7 +84,7 @@ async function getUid(uidKey) {
 
 async function getPageno(cookieKey, paramKey){
   const cookiePageno = await getCookie(cookieKey)
-  if (cookiePageno) {
+  if (cookiePageno && cookiePageno !== "undefined") {
     console.log("cookieからの取得 ", String(Number(cookiePageno) + 1))
     return String(Number(cookiePageno) + 1)
   } else {
@@ -98,6 +98,12 @@ async function getPageno(cookieKey, paramKey){
     }
   }
 }
+
+async function getVisiblePageno(cookieKey, paramKey){
+  console.log("初回からの取得 ", 1)
+  return "1"
+}
+
 
 async function closeExec(resultJson, h) {
   console.log("イベントタイプ--------------------", event.type);
@@ -122,4 +128,4 @@ async function closeExec(resultJson, h) {
 }
 
 
-export {mkDateTime, pixelDepth, clickDepth, getUid, getPageno, closeExec}
+export {mkDateTime, pixelDepth, clickDepth, getUid, getPageno, closeExec, getVisiblePageno}

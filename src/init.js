@@ -1,7 +1,8 @@
 import { mkDateTime, pixelDepth, getUid} from "./common";
+import { storeInCookie} from "./cookie";
 
 // 初期化
-async function init(resultJson, h, clienth){
+async function init(resultJson, h, clienth, func){
 
   const uidKey = "_atuid";
 
@@ -26,8 +27,10 @@ async function init(resultJson, h, clienth){
     ,"url":url
     ,"referrer":referrer
     ,"ua":ua
+    ,"pageno": await func("_atpno", "atpno=")
   }
   resultJson.user = userJson
+  storeInCookie(resultJson.user.pageno)
 
   // startJson初期化
   const startJson = {

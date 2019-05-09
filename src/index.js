@@ -1,8 +1,8 @@
 import '@babel/polyfill'
-import { pixelDepth, clickDepth, getPageno, closeExec} from "./common";
+import { pixelDepth, clickDepth, getPageno, closeExec, getVisiblePageno} from "./common";
 import { changeQuery, deleteQuery } from "./query";
 import { init } from "./init";
-import { storeInCookie} from "./cookie";
+
 
 
 async function main(){
@@ -13,19 +13,17 @@ async function main(){
   h = document.documentElement.scrollHeight;  // ドキュメントの高さ
   clienth = document.documentElement.clientHeight;  //高さ
   let resultJson = {}
-  await init(resultJson, h, clienth);
-  console.log('計測用のJSON最終形態',resultJson)
+  await init(resultJson, h, clienth, getPageno);
+  console.log('計測用のJSON最終形態', resultJson)
 
   // ページ遷移番号
-  resultJson.pageno = await getPageno("_atpno", "atpno=")
-  console.log("pageNo : ",resultJson.pageno)
+  // resultJson.pageno = await getPageno("_atpno", "atpno=")
+  // console.log("pageNo : ",resultJson.pageno)
 
   // ancher elementのquery書き換え（初期化後の処理）
   changeQuery("index2","userid", resultJson.user.id)
   changeQuery("index2","atpno", resultJson.pageno)
-  storeInCookie(resultJson.pageno)
-
-
+  
   // 画面遷移時の処理
   // window.addEventListener("unload", async (e) => {
   //   closeExec(resultJson, h);
@@ -47,6 +45,10 @@ async function main(){
     console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
   })
 
+  // window.addEventListener('focusout', (event) => {
+  //   console.log("focusout --- ", event) 
+  // });
+
   // タブ移動および画面遷移時の処理
   window.addEventListener("visibilitychange", async () => {
     const visibilityState = document.visibilityState
@@ -60,9 +62,7 @@ async function main(){
       h = document.documentElement.scrollHeight;  // ドキュメントの高さ
       clienth = document.documentElement.clientHeight;  //高さ
       let resultJson = {}
-      resultJson.start = await init(resultJson, h, clienth);
-      resultJson.pageno = "1"
-      storeInCookie(resultJson.pageno)
+      await init(resultJson, h, clienth, getVisiblePageno);
 
       // ancher elementのquery書き換え
       await deleteQuery("index2","atpno")

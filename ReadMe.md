@@ -71,3 +71,11 @@ aws kinesis describe-stream --stream-name test
 
 ---
 
+
+
+```npm
+npm install typescript
+npm install --save-dev ts-loader
+npm install --save-dev jest @types/jest
+npm install --save-dev tslint prettier tslint-plugin-prettier tslint-config-prettier tslint-config-standard
+```

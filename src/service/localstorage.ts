@@ -3,19 +3,17 @@
  * @param {string} key
  * @returns {paramjson}
  */
-function getLocalStorage(key) {
-  const value = localStorage.getItem(key);
+function getLocalStorage(key: string) : string| null{
+  const value: string = localStorage.getItem(key);
   return value? value: null;
 };
 
 /**
  * localstorageに値 + localstorageの有効期限を格納する
- * @param {paramjson} paramJson
- * @param deadline
+ * @param uuid
  */
-
-function storeInLocalStorage(paramJson){
-  localStorage.setItem('_atuid', paramJson);
+function storeInLocalStorage(uuid: string){
+  localStorage.setItem('_atuid', uuid);
 }
 
 export {getLocalStorage, storeInLocalStorage}

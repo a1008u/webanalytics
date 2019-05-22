@@ -3,8 +3,22 @@ import { pixelDepth, clickDepth, closeExec } from "./service/common";
 import { changeQuery } from "./service/query";
 import { init } from "./service/init";
 import { resultjson, scroll } from './domain/resultjson';
+import { getCertificationStatus } from './service/certificate';
+
+// declare let __atinfo: AccessJson;
+// class AccessJson {
+//   public accesskey: string;
+//   public siteids: Array<string>;
+
+//   public constructor(accesskey: string, siteids: Array<string>){
+//     this.accesskey = accesskey
+//     this.siteids = siteids
+//   }
+// }
+
 
 async function main(){
+
   // 再利用変数（画面遷移時とタブがvisibleの時に代入されます。）
   let h: number, clienth: number;
   let resultJson: resultjson;
@@ -16,7 +30,7 @@ async function main(){
   console.log('計測用のJSON最終形態', resultJson)
 
   // ancher elementのquery書き換え（初期化後の処理）
-  changeQuery("index2","userid", resultJson.user.id)
+  changeQuery("localhost:8080","userid", resultJson.user.id)
 
   // scrollの処理
   window.addEventListener("scroll", async() => {
@@ -49,6 +63,13 @@ async function main(){
       resultJson = await init(h, clienth);
     }
   });
+
+  const data = await getCertificationStatus("http://localhost:8080/ckcs");
+  console.log("data is ---------- ", data)
 }
 
-main();
+
+// 認証キーがないと、実行させない
+if (__atinfo.atkey) {
+  main();
+}

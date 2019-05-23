@@ -81,7 +81,7 @@ async function getUid(uidKey: string) : Promise<string>{
  * @param resultJson 
  * @param h 
  */
-async function closeExec(resultJson: resultjson, h: number) {
+async function closeExec(resultJson: resultjson, h: number, ) {
   console.log("イベントタイプ--------------------", event.type);
   const enddateJst: string = await mkDateTime();
   const endJson: end = new end(enddateJst, h)

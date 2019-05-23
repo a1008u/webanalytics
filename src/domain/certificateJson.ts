@@ -9,3 +9,7 @@ class AccessJson {
     this.siteids = siteids
   }
 }
+
+class CertificationJson {
+  public Isactive: string;
+}

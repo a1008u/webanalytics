@@ -3,24 +3,13 @@ import { pixelDepth, clickDepth, closeExec } from "./service/common";
 import { changeQuery } from "./service/query";
 import { init } from "./service/init";
 import { resultjson, scroll } from './domain/resultjson';
-import { getCertificationStatus } from './service/certificate';
-
-// declare let __atinfo: AccessJson;
-// class AccessJson {
-//   public accesskey: string;
-//   public siteids: Array<string>;
-
-//   public constructor(accesskey: string, siteids: Array<string>){
-//     this.accesskey = accesskey
-//     this.siteids = siteids
-//   }
-// }
-
+import { getCertificationStatus, ckCertificattion } from './service/certificate';
+import { getSesstionStorage } from './service/sessionstorage';
 
 async function main(){
 
   // 再利用変数（画面遷移時とタブがvisibleの時に代入されます。）
-  let h: number, clienth: number;
+  let h: number, clienth: number, certificationStatus: boolean;
   let resultJson: resultjson;
 
   // 計測用のJSON最終形態(start、end、scroll、clickは下記で追加する。)
@@ -53,7 +42,9 @@ async function main(){
     const visibilityState = document.visibilityState
     if (visibilityState === "hidden") {
       console.log("イベントタイプ", event.type);
-      closeExec(resultJson, h);
+      if (certificationStatus) {
+        closeExec(resultJson, h);
+      }
     }
 
     if (visibilityState === "visible"){
@@ -61,12 +52,15 @@ async function main(){
       h = document.documentElement.scrollHeight;  // ドキュメントの高さ
       clienth = document.documentElement.clientHeight;  //高さ
       resultJson = await init(h, clienth);
+      certificationStatus = await ckCertificattion(__atinfo);
     }
   });
 
-  const data = await getCertificationStatus("http://localhost:8080/ckcs");
-  console.log("data is ---------- ", data)
+  // 証明書確認
+  certificationStatus = await ckCertificattion(__atinfo);
 }
+
+
 
 
 // 認証キーがないと、実行させない

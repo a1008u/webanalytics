@@ -50,7 +50,11 @@ async function clickDepth(e: MouseEvent): Promise<click> {
 }
 
 /**
- * serIdの取得
+ * Uid(user ID)の所得順序
+ * 1.localstorageから取得
+ * 2.クエリーパラメータから取得
+ * 3.uuidv4を利用して、生成
+ * 
  * @param uidKey
  */
 async function getUid(uidKey: string) : Promise<string>{
@@ -77,7 +81,7 @@ async function getUid(uidKey: string) : Promise<string>{
 }
 
 /**
- * 
+ * 認証が有効な場合、gaeにdatalyのデータを転送する。
  * @param resultJson 
  * @param h 
  */
@@ -89,7 +93,7 @@ async function closeExec(resultJson: resultjson, h: number, ) {
   console.log('endに格納するJSON', endJson, '計測用のJSON最終形態', resultJson);
 
   const localUrl = "http://127.0.0.1:8080/json";
-  const gaeurl = "https://rugged-baton-234609.appspot.com/json";
+  const gaeurl = "https://dataly.appspot.com/json";
   // const gaeurl = "https://ck-how-2-use.appspot.com/json"
   if ("sendBeacon" in navigator) {
     navigator.sendBeacon(gaeurl, JSON.stringify(resultJson));

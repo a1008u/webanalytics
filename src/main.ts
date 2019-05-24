@@ -3,8 +3,7 @@ import { pixelDepth, clickDepth, closeExec } from "./service/common";
 import { changeQuery } from "./service/query";
 import { init } from "./service/init";
 import { resultjson, scroll } from './domain/resultjson';
-import { getCertificationStatus, ckCertificattion } from './service/certificate';
-import { getSesstionStorage } from './service/sessionstorage';
+import { ckCertificattion } from './service/certificate';
 
 async function main(){
 
@@ -59,8 +58,6 @@ async function main(){
   // 証明書確認
   certificationStatus = await ckCertificattion(__atinfo);
 }
-
-
 
 
 // 認証キーがないと、実行させない

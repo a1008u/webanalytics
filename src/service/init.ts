@@ -2,7 +2,16 @@ import { mkDateTime, pixelDepth, getUid} from "./common"
 import { user, scroll, start, resultjson, click } from "../domain/resultjson";
 
 
-// 初期化
+/**
+ * 初期化
+ * resultjsonに初期で登録しなければいけない情報を追加
+ * 1.user - 
+ * 2.scroll - 
+ * 3.start - 
+ * 4.end - 
+ * 5.click - 
+ * 
+ */
 async function init(h: number, clienth: number) : Promise<resultjson> {
 
   // 1.アクセスした時間を作成し、計測用のJSON最終形態のstartに追加

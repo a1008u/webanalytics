@@ -30,8 +30,8 @@ async function ckCertificattion(__atinfo : AccessJson): Promise<boolean> {
     }
   
     const localAccessURL: string = "http://localhost:8080/ckcs"
-    const accessURL: string = ""
-    const certificationJson: CertificationJson = await getCertificationStatus(localAccessURL);
+    const accessURL = "https://dataly.appspot.com/ckcs";
+    const certificationJson: CertificationJson = await getCertificationStatus(accessURL);
 
     console.log("datastoreから取得 --- ", certificationJson.Isactive)
     if (certificationJson.Isactive) {

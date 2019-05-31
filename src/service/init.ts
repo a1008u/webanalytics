@@ -21,7 +21,7 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
   const url = location.href
   const referrer = document.referrer
   const ua = window.navigator.userAgent.toLowerCase();
-  const userjson: user = new user(uuid, url, referrer, ua)
+  const userjson: user = new user(uuid, referrer, ua, url)
 
   // scroll初期化
   const scrolljson: scroll = await pixelDepth()

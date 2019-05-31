@@ -19,7 +19,7 @@ class user{
   public referrer: string
   public ua: string
   public url: string
-  public constructor(id: string, referrer: string, ua: string, url: string){
+  public constructor(id: string, referrer: string, url: string, ua: string){
     this.id = id
     this.referrer = referrer
     this.ua = ua

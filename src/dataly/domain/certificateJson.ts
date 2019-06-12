@@ -11,5 +11,12 @@ class AccessJson {
 }
 
 class CertificationJson {
-  public Isactive: string;
+  public ACCESSKEY: string
+  public SITEID: string
+  public BASEURL:Baseurl
+}
+
+class Baseurl {
+  public SERVICENAME: string
+	public TAG: string
 }

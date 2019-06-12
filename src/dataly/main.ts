@@ -3,19 +3,17 @@ import { pixelDepth, clickDepth, closeExec } from "./service/common";
 import { changeQuery } from "./service/query";
 import { init } from "./service/init";
 import { resultjson, scroll } from './domain/resultjson';
-import { ckCertificattion } from './service/certificate';
 
 async function main(){
 
   // 再利用変数（画面遷移時とタブがvisibleの時に代入されます。）
-  let h: number, clienth: number, certificationStatus: boolean;
+  let h: number, clienth: number;
   let resultJson: resultjson;
 
   // 計測用のJSON最終形態(start、end、scroll、clickは下記で追加する。)
   h = document.documentElement.scrollHeight;  // ドキュメントの高さ
   clienth = document.documentElement.clientHeight;  //高さ
   resultJson = await init(h, clienth);
-  console.log('計測用のJSON最終形態', resultJson)
 
   // ancher elementのquery書き換え（初期化後の処理）
   changeQuery("localhost:8080","userid", resultJson.user.id)
@@ -41,9 +39,7 @@ async function main(){
     const visibilityState = document.visibilityState
     if (visibilityState === "hidden") {
       console.log("イベントタイプ", event.type);
-      if (certificationStatus) {
-        closeExec(resultJson, h);
-      }
+      closeExec(resultJson, h);
     }
 
     if (visibilityState === "visible"){
@@ -51,16 +47,11 @@ async function main(){
       h = document.documentElement.scrollHeight;  // ドキュメントの高さ
       clienth = document.documentElement.clientHeight;  //高さ
       resultJson = await init(h, clienth);
-      certificationStatus = await ckCertificattion(__atinfo);
     }
   });
 
-  // 証明書確認
-  certificationStatus = await ckCertificattion(__atinfo);
 }
 
+console.log("datalyの起動です")
+main();
 
-// 認証キーがないと、実行させない
-if (__atinfo.atkey) {
-  main();
-}

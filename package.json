@@ -5,6 +5,7 @@
   "main": "test.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
+    "build_mkjs": "webpack --config ./webpack.config_mkjs.js",
     "gcp": "webpack --config ./webpack.config.gcp.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

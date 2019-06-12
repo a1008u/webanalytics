@@ -92,6 +92,10 @@ async function closeExec(resultJson: resultjson, h: number, ) {
   resultJson.end = endJson;
   console.log('endに格納するJSON', endJson, '計測用のJSON最終形態', resultJson);
 
+  console.log("----------------");
+  console.log(resultJson);
+  console.log("----------------");
+
   const localUrl = "http://127.0.0.1:8080/json";
   const gaeurl = "https://dataly.appspot.com/json";
   // const gaeurl = "https://ck-how-2-use.appspot.com/json"

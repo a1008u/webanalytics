@@ -33,11 +33,11 @@ async function ckCertificattion(__atinfo : AccessJson): Promise<boolean> {
     const accessURL = "https://dataly.appspot.com/ckcs";
     const certificationJson: CertificationJson = await getCertificationStatus(accessURL);
 
-    console.log("datastoreから取得 --- ", certificationJson.Isactive)
-    if (certificationJson.Isactive) {
-        storeSesstionStorage(certificationJson.Isactive);
-        return true
-    }
+    // console.log("datastoreから取得 --- ", certificationJson.Isactive)
+    // if (certificationJson.Isactive) {
+    //     storeSesstionStorage(certificationJson.Isactive);
+    //     return true
+    // }
 
     return false
   }

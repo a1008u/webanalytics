@@ -3,12 +3,12 @@ const path = require('path');
 module.exports = {
 
   entry: {
-      "ts":['./src/dataly/main.ts']
+      "ts":['./src/mkjs/main.ts']
   },
 
   output: {
     // 出力するファイル名
-    filename: 'bundle.js',
+    filename: 'mkjs.js',
     // 出力先のパス（絶対パスを指定する必要がある）
     path: path.join(__dirname, 'public/js')
   },

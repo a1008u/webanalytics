@@ -1,16 +1,27 @@
 class resultjson{
   public user: user;
+  public partner: partner;
   public scroll: scroll;
   public start: start;
   public end: end;
   public click: Array<click>
 
-  public constructor(user: user, scroll: scroll, start: start, end: end, click: Array<click>){
+  public constructor(user: user, partner:partner, scroll: scroll, start: start, end: end, click: Array<click>){
     this.user = user
+    this.partner = partner
     this.scroll = scroll
     this.start = start
     this.end = end
     this.click = click
+  }
+}
+
+class partner{
+  public siteid: string;
+  public title: string;
+  public constructor(siteid: string, title: string){
+    this.siteid = siteid;
+    this.title = title;
   }
 }
 
@@ -22,8 +33,8 @@ class user{
   public constructor(id: string, referrer: string, url: string, ua: string){
     this.id = id
     this.referrer = referrer
-    this.ua = ua
     this.url = url
+    this.ua = ua
   }
 }
 
@@ -69,5 +80,5 @@ class end {
   }
 }
 
-export {resultjson,user,scroll,click,start,end}
+export {resultjson,user,partner,scroll,click,start,end}
 

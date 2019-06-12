@@ -1,15 +1,16 @@
 import { mkDateTime, pixelDepth, getUid} from "./common"
-import { user, scroll, start, resultjson, click } from "../domain/resultjson";
+import { user, partner, scroll, start, resultjson, click } from "../domain/resultjson";
 
 
 /**
  * 初期化
  * resultjsonに初期で登録しなければいけない情報を追加
  * 1.user - 
- * 2.scroll - 
- * 3.start - 
- * 4.end - 
- * 5.click - 
+ * 2.partner -
+ * 3.scroll - 
+ * 4.start - 
+ * 5.end - 
+ * 6.click - 
  * 
  */
 async function init(h: number, clienth: number) : Promise<resultjson> {
@@ -21,7 +22,13 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
   const url = location.href
   const referrer = document.referrer
   const ua = window.navigator.userAgent.toLowerCase();
-  const userjson: user = new user(uuid, referrer, ua, url)
+  const userJson: user = new user(uuid, referrer, url, ua)
+
+  // パートナーサイトIDの設定
+  const datalyElement: HTMLElement = document.getElementById("__at_dataly")
+  const pSiteId: string = datalyElement.getAttribute("__atsiteid")
+  const pTitle: string = document.title;
+  const partnerJson: partner = new partner(pSiteId, pTitle);
 
   // scroll初期化
   const scrolljson: scroll = await pixelDepth()
@@ -33,7 +40,8 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
   const startjson: start = new start(clienth, startdateJst, h, scrollTop)
 
   return new resultjson(
-    userjson,
+    userJson,
+    partnerJson,
     scrolljson,
     startjson,
     null,

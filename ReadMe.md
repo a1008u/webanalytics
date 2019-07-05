@@ -75,7 +75,10 @@ aws kinesis describe-stream --stream-name test
 
 ```npm
 npm install typescript
+npm install --save dotenv
 npm install --save-dev ts-loader
 npm install --save-dev jest @types/jest
-npm install --save-dev tslint prettier tslint-plugin-prettier tslint-config-prettier tslint-config-standard
+npm install --save-dev @types/dotenv
+npm install --save-dev npm-run-all cpx rimraf
+npm install --save-dev eslint prettier @typescript-eslint/{eslint-plugin,parser} eslint-config-prettier eslint-plugin-prettier
 ```

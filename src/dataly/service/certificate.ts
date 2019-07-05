@@ -1,4 +1,5 @@
 import { storeSesstionStorage, getSesstionStorage } from "./sessionstorage";
+import { IMPLEMENTORJSACCESSURL } from "../../config/config";
 
 async function getCertificationStatus(request: RequestInfo): Promise<any> {
     const method = "POST";
@@ -28,17 +29,14 @@ async function ckCertificattion(__atinfo : AccessJson): Promise<boolean> {
         console.log("session storageから取得 --- ", isActive)
         return true
     }
-  
-    const localAccessURL: string = "http://localhost:8080/ckcs"
-    const accessURL = "https://dataly.appspot.com/ckcs";
-    const certificationJson: CertificationJson = await getCertificationStatus(accessURL);
+
+    const certificationJson: CertificationJson = await getCertificationStatus(IMPLEMENTORJSACCESSURL);
 
     // console.log("datastoreから取得 --- ", certificationJson.Isactive)
     // if (certificationJson.Isactive) {
     //     storeSesstionStorage(certificationJson.Isactive);
     //     return true
     // }
-
     return false
   }
 

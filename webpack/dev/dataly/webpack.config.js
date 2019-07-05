@@ -1,16 +1,16 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
 module.exports = {
-
+  target: 'node',
   entry: {
-      "ts":['./src/mkjs/main.ts']
+      "ts":['./src/dataly/main.ts']
   },
 
   output: {
     // 出力するファイル名
-    filename: 'mkjs.js',
+    filename: 'dataly.min.js',
     // 出力先のパス（絶対パスを指定する必要がある）
-    path: path.join(__dirname, 'public/js')
+    path: path.join(__dirname, '../../../public/js/dataly')
   },
   mode: 'development'
   ,

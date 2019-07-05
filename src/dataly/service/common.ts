@@ -1,7 +1,8 @@
 import { getLocalStorage, storeInLocalStorage} from "./localstorage";
 import { getQueryTargetKeyValue } from "./query";
 import { click, scroll, resultjson, end } from "../domain/resultjson";
-const uuidv4 = require('uuid/v4');
+import { DATALYACCESSURL } from "../../config/config";
+import uuidv4 = require('uuid/v4');
 
 // 作業時間を作成
 function mkDateTime () : string {
@@ -15,7 +16,6 @@ function mkDateTime () : string {
   + '.' + ('0' + date.getMilliseconds()).slice(-3);
   return dateJST
 }
-
 
 /**
  * スクロール時の処理
@@ -96,14 +96,12 @@ async function closeExec(resultJson: resultjson, h: number, ) {
   console.log(resultJson);
   console.log("----------------");
 
-  const localUrl = "http://127.0.0.1:8080/json";
-  const gaeurl = "https://dataly.appspot.com/json";
-  // const gaeurl = "https://ck-how-2-use.appspot.com/json"
+  // LOCALDATALYACCESSURL or DATALYACCESSURL
   if ("sendBeacon" in navigator) {
-    navigator.sendBeacon(gaeurl, JSON.stringify(resultJson));
+    navigator.sendBeacon(DATALYACCESSURL, JSON.stringify(resultJson));
   } else {
     const rq = new XMLHttpRequest();
-    rq.open("POST", gaeurl, false);
+    rq.open("POST", DATALYACCESSURL, false);
     rq.send(JSON.stringify(resultJson));
   }
 }

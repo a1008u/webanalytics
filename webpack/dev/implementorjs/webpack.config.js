@@ -1,21 +1,22 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
-module.exports = {
 
+module.exports = {
+  target: 'node',
   entry: {
-      "ts":['./src/dataly/main.ts']
+      "ts":['./src/implementorjs/main.ts']
   },
 
   output: {
     // 出力するファイル名
-    filename: 'bundle.js',
+    filename: 'atimplementorjs.min.js',
     // 出力先のパス（絶対パスを指定する必要がある）
-    path: path.join(__dirname, 'public/js')
+    path: path.join(__dirname, '../../../public/js/implementorjs/')
   },
   mode: 'development'
   ,
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
 
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、

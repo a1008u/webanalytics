@@ -1,0 +1,15 @@
+# docker-composeのバージョン
+version: "3"
+services:
+  dataly_build_local_dev:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: dataly_build_local_dev
+    volumes:
+      - ../../:/app
+    command: 
+      bash -c "
+      ls -la && 
+      pwd && 
+      npm run build_local_dev"

@@ -9,12 +9,13 @@ npm install webpack --save-dev
 npm install webpack-cli --save-dev
 export PATH=$PATH:./node_modules/.bin
 npm install typescript
-npm install --save dotenv
+npm install --save dotenv fs
 npm install --save-dev ts-loader
-npm install --save-dev jest @types/jest
+npm install --save-dev jest @types/jest @types/dotenv-webpack
 npm install --save-dev @types/dotenv
 npm install --save-dev npm-run-all cpx rimraf
 npm install --save-dev eslint prettier @typescript-eslint/{eslint-plugin,parser} eslint-config-prettier eslint-plugin-prettier
+npm install --save-dev jest ts-jest @types/jest
 ```
 
 ## dockerについて
@@ -33,4 +34,15 @@ cd ./docker/production/
 docker-compose up --build
 ```
 
+--------------------------------------------------------------
+
 ## webpackについて
+### localhostでGAEを起動した場合
+```npm
+npm run build_local_dev
+```
+
+### GCP上にGAEを起動した場合
+```npm
+npm run build_dev
+```

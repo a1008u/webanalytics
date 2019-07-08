@@ -1,5 +1,6 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   target: 'node',
@@ -13,8 +14,10 @@ module.exports = {
     // 出力先のパス（絶対パスを指定する必要がある）
     path: path.join(__dirname, '../../../public/js/implementorjs/')
   },
-  mode: 'development'
-  ,
+  plugins: [
+    new Dotenv({ path:  path.resolve(__dirname, '../../dev/.env/', '.env')})
+  ],
+  mode: 'development',
   resolve: {
     extensions: ['.ts', '.js'],
   },

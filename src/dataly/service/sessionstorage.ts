@@ -8,12 +8,12 @@ function getSesstionStorage(key: string) : boolean{
     return value === "true"? true: false;
   };
   
-  /**
-   * localstorageに値 + localstorageの有効期限を格納する
-   * @param uuid
-   */
-  function storeSesstionStorage(isActive: string){
-    sessionStorage.setItem('__atcstatus', isActive);
-  }
+/**
+ * localstorageに値 + localstorageの有効期限を格納する
+ * @param uuid
+ */
+function storeSesstionStorage(isActive: string) {
+  sessionStorage.setItem('__atcstatus', isActive);
+}
   
   export {getSesstionStorage, storeSesstionStorage}

@@ -4,7 +4,7 @@
   "description": "",
   "main": "test.js",
   "scripts": {
-    "build_local_dev": "npm-run-all clean cpx:file build_local_dev:*",
+    "build_local_dev": "NODE_ENV=local_dev npm-run-all clean cpx:file build_local_dev:*",
     "build_dev": "npm-run-all clean build_dev:*",
     "clean": "rimraf public",
     "cpx:file": "cpx \"html/**/*.html\" ./public/html",
@@ -29,6 +29,8 @@
     "aws-sdk": "^2.417.0",
     "axios": "^0.18.0",
     "dotenv": "^8.0.0",
+    "fs": "0.0.1-security",
+    "save": "^2.4.0",
     "typescript": "^3.4.5",
     "uuid": "^3.3.2"
   },
@@ -37,11 +39,13 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@types/dotenv": "^6.1.1",
-    "@types/jest": "^24.0.12",
+    "@types/dotenv-webpack": "^1.7.0",
+    "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "babel-loader": "^8.0.5",
     "cpx": "^1.5.0",
+    "dotenv-webpack": "^1.7.0",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
@@ -49,6 +53,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.0",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
@@ -56,5 +61,38 @@
     "tslint-plugin-prettier": "^2.0.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/src/vat/atvad/css/index.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/src/vat/atvad/svg/play-circle-solid.svg"
+    },
+    "testEnvironment": "jsdom",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testURL": "http://localhost:8080/test.html",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 80,
+        "lines": 80,
+        "statements": 78
+      }
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts}"
+    ]
   }
 }

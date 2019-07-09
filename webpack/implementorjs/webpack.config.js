@@ -1,21 +1,43 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
+
+// 環境ごとの環境変数を指定しているenvを選択する
+let envFile = null
+switch (process.env.NODE_ENV) {
+  case "dev":
+    envFile = "dev/.env-dev"
+    break;
+  case "staging":
+    envFile = "staging/.env"
+    break;
+  case "production":
+    envFile = "production/.env"
+    break;
+  case "local_dev":
+  default:
+    envFile = "dev/.env-local-dev"
+    break;
+}
+
 module.exports = {
   target: 'node',
   entry: {
-      "ts":['./src/dataly/main.ts']
+      "ts":['./src/implementorjs/main.ts']
   },
 
   output: {
     // 出力するファイル名
-    filename: 'dataly.min.js',
+    filename: 'atimplementorjs.min.js',
     // 出力先のパス（絶対パスを指定する必要がある）
-    path: path.join(__dirname, '../../../public/js/dataly')
+    path: path.join(__dirname, '../../public/js/implementorjs/')
   },
-  mode: 'development'
-  ,
+  plugins: [
+    new Dotenv({ path:  path.resolve(__dirname, '../.env/', envFile)})
+  ],
+  mode: 'development',
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
   },
 
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、

@@ -1,6 +1,9 @@
-// import { IMPLEMENTORJSACCESSURL } from "../../config/config";
-import { getSesstionStorage } from "./localstorage";
+import { getSesstionStorage, storeSesstionStorage } from "./localstorage";
 
+/**
+ * GAEにアクセスして、認証キーを取得する
+ * @param IMPLEMENTORJSACCESSURL 
+ */
 async function getCertificationStatus(IMPLEMENTORJSACCESSURL: RequestInfo): Promise<any> {
     const method = "POST";
     const body = JSON.stringify(__atinfo);
@@ -18,7 +21,13 @@ async function getCertificationStatus(IMPLEMENTORJSACCESSURL: RequestInfo): Prom
         .then(body => resolve(body));
     });
   }
-  
+
+/**
+ * 認証キーが有効かどうか確認する
+ * @param key 
+ * @param __atinfo 
+ * @returns Promise<CertificationJson>
+ */
 async function ckCertificattionJson(key: string, __atinfo: AccessJson): Promise<CertificationJson> {
 
     // sesssionStorageに認証情報があるか確認
@@ -28,22 +37,15 @@ async function ckCertificattionJson(key: string, __atinfo: AccessJson): Promise<
         return certificationJsonSesstion;
     }
 
-    // Cloud Datastoreからの取得
+    // Cloud Datastoreからの取得(飛び先は、envから取得する)
+    const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL
     const certificationJson: CertificationJson = await getCertificationStatus(IMPLEMENTORJSACCESSURL);
     console.log("datastoreから取得 --- ", certificationJson);
+
+    // sessionstorageに保存
+    storeSesstionStorage(key, certificationJson)
+
     return certificationJson;
 }
-
-console.log(process.env.NODE_ENV)
-console.log(process.env.IMPLEMENTORJSACCESSURL)
-console.log(process.env.LOCALDATALYACCESSURL)
-export const IMPLEMENTORJSACCESSURL: string =
-  process.env.NODE_ENV === "dev"
-    ? process.env.IMPLEMENTORJSACCESSURL
-    : process.env.LOCALIMPLEMENTORJSACCESSURL;
-export const DATALYACCESSURL: string =
-  process.env.NODE_ENV === "dev"
-    ? process.env.DATALYACCESSURL
-    : process.env.LOCALDATALYACCESSURL;
 
 export {ckCertificattionJson}

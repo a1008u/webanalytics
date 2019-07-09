@@ -1,5 +1,4 @@
-import { storeSesstionStorage, getSesstionStorage } from "./sessionstorage";
-import { IMPLEMENTORJSACCESSURL } from "../../config/config";
+import {getSesstionStorage } from "./sessionstorage";
 
 async function getCertificationStatus(request: RequestInfo): Promise<any> {
     const method = "POST";
@@ -30,6 +29,7 @@ async function ckCertificattion(__atinfo : AccessJson): Promise<boolean> {
         return true
     }
 
+    const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL
     const certificationJson: CertificationJson = await getCertificationStatus(IMPLEMENTORJSACCESSURL);
 
     // console.log("datastoreから取得 --- ", certificationJson.Isactive)

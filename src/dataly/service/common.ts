@@ -1,7 +1,6 @@
 import { getLocalStorage, storeInLocalStorage} from "./localstorage";
 import { getQueryTargetKeyValue } from "./query";
 import { click, scroll, resultjson, end } from "../domain/resultjson";
-import { DATALYACCESSURL } from "../../config/config";
 import uuidv4 = require('uuid/v4');
 
 // 作業時間を作成
@@ -96,7 +95,7 @@ async function closeExec(resultJson: resultjson, h: number, ) {
   console.log(resultJson);
   console.log("----------------");
 
-  // LOCALDATALYACCESSURL or DATALYACCESSURL
+  const DATALYACCESSURL: string = process.env.DATALYACCESSURL
   if ("sendBeacon" in navigator) {
     navigator.sendBeacon(DATALYACCESSURL, JSON.stringify(resultJson));
   } else {

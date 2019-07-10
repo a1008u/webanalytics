@@ -3,7 +3,7 @@
  * @param {string} key
  * @returns {paramjson}
  */
-function getLocalStorage(key: string) : string| null{
+async function getLocalStorage(key: string) : Promise<string| null>{
   const value: string = localStorage.getItem(key);
   return value? value: null;
 };

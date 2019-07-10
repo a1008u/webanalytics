@@ -1,5 +1,6 @@
-import { mkDateTime, pixelDepth, getUid} from "./common"
+import { mkDateTime, pixelDepth} from "./common"
 import { user, partner, scroll, start, resultjson, click } from "../domain/resultjson";
+import { getLocalStorage } from "../../common/localstorage";
 
 
 /**
@@ -18,7 +19,7 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
   // 1.アクセスした時間を作成し、計測用のJSON最終形態のstartに追加
   // user初期化
   const uidKey: string= "_atuid";
-  const uuid = await getUid(uidKey)
+  const uuid: string = await getLocalStorage(uidKey)
   const url = location.href
   const referrer = document.referrer
   const ua = window.navigator.userAgent.toLowerCase();

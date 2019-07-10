@@ -1,7 +1,4 @@
-import { getLocalStorage, storeInLocalStorage} from "./localstorage";
-import { getQueryTargetKeyValue } from "./query";
 import { click, scroll, resultjson, end } from "../domain/resultjson";
-import uuidv4 = require('uuid/v4');
 
 // 作業時間を作成
 function mkDateTime () : string {
@@ -49,37 +46,6 @@ async function clickDepth(e: MouseEvent): Promise<click> {
 }
 
 /**
- * Uid(user ID)の所得順序
- * 1.localstorageから取得
- * 2.クエリーパラメータから取得
- * 3.uuidv4を利用して、生成
- * 
- * @param uidKey
- */
-async function getUid(uidKey: string) : Promise<string>{
-
-  // localstorageck
-  const atuid: string|null = getLocalStorage(uidKey)
-  if(atuid){
-    console.log("local storageから取得 : ", atuid)
-    return atuid;
-  }
-
-  // paramck
-  const queryUid: string|null = getQueryTargetKeyValue(location.search.substring(1), "userid=")
-  if(queryUid){
-    console.log("paramから取得 : ", queryUid)
-    storeInLocalStorage(queryUid)
-    return queryUid;
-  }
-
-  const uuid = uuidv4()
-  console.log("uuidv4()から取得 : ", uuid)
-  storeInLocalStorage(uuid)
-  return uuid
-}
-
-/**
  * 認証が有効な場合、gaeにdatalyのデータを転送する。
  * @param resultJson 
  * @param h 
@@ -106,4 +72,4 @@ async function closeExec(resultJson: resultjson, h: number, ) {
 }
 
 
-export {mkDateTime, pixelDepth, clickDepth, getUid, closeExec}
+export {mkDateTime, pixelDepth, clickDepth, closeExec}

@@ -1,6 +1,5 @@
-import '@babel/polyfill'
 import { pixelDepth, clickDepth, closeExec } from "./service/common";
-import { changeQuery } from "./service/query";
+import { changeQuery } from "../implementorjs/service/query";
 import { init } from "./service/init";
 import { resultjson, scroll } from './domain/resultjson';
 
@@ -16,7 +15,8 @@ async function main(){
   resultJson = await init(h, clienth);
 
   // ancher elementのquery書き換え（初期化後の処理）
-  changeQuery("localhost:8080","userid", resultJson.user.id)
+  const DELIVERYURL: string = process.env.DELIVERYURL
+  changeQuery(DELIVERYURL,"userid", resultJson.user.id)
 
   // scrollの処理
   window.addEventListener("scroll", async() => {
@@ -30,12 +30,12 @@ async function main(){
   // click時の処理
   window.addEventListener("click", async(e: MouseEvent) => {
     const clickJson = await clickDepth(e);
-    resultJson.click.push(clickJson)
     console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
+    resultJson.click.push(clickJson)
   })
 
   // タブ移動および画面遷移時の処理
-  window.addEventListener("visibilitychange", async () => {
+  window.addEventListener("visibilitychange", async() => {
     const visibilityState = document.visibilityState
     if (visibilityState === "hidden") {
       console.log("イベントタイプ", event.type);

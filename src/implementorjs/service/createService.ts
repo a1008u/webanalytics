@@ -1,4 +1,4 @@
-import { storeSesstionStorage } from "./localstorage";
+import { storeSesstionStorage } from "../../common/sessionstorage";
 
 /**
  * Dataly用のタグを生成
@@ -15,7 +15,7 @@ function mkDataly(sessionStorageKey: string, certificationJson: CertificationJso
   scriptElement.setAttribute("src", certificationJson.BASEURL.TAG);
   // scriptタグを貼り付け
   document.head.appendChild(scriptElement);
-  console.log("datalyの設定完了");
+  console.log("Datalyの設定完了");
 }
 
 

@@ -40,6 +40,9 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
+  externals:{
+    crypto: 'null'
+  },
 
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、
   // webpackがbundleファイルを作れるようになる。

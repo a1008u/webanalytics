@@ -1,4 +1,4 @@
-import { getSesstionStorage, storeSesstionStorage } from "./localstorage";
+import { getSesstionStorage, storeSesstionStorage } from "../../common/sessionstorage";
 
 /**
  * GAEにアクセスして、認証キーを取得する

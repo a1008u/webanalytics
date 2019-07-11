@@ -20,7 +20,7 @@ async function getUid(uidKey: string) : Promise<string>{
     }
   
     // paramck
-    const queryUid: string|null = getQueryTargetKeyValue(location.search.substring(1), "userid=")
+    const queryUid: string|null = getQueryTargetKeyValue(location.search.substring(1), "id=")
     if(queryUid){
       console.log("paramから取得 : ", queryUid)
       storeInLocalStorage(queryUid)

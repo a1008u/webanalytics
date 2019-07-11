@@ -40,6 +40,7 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
   const scrollTop: number = document.documentElement.scrollTop
   const startjson: start = new start(clienth, startdateJst, h, scrollTop)
 
+  // 終了以外の情報でオブジェクト生成
   return new resultjson(
     userJson,
     partnerJson,

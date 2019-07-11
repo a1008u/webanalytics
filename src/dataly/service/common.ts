@@ -34,7 +34,6 @@ async function pixelDepth(): Promise<scroll> {
       document.documentElement.scrollHeight,
       document.documentElement.scrollTop
     );
-    console.log("--------------------", scrollJson)
     return scrollJson
 }
 

@@ -21,6 +21,7 @@ async function main(){
   // scrollの処理
   window.addEventListener("scroll", async() => {
     const scrollJson: scroll = await pixelDepth()
+    // scrollは常に一番深くスクロールした情報を取得する
     if (resultJson.scroll.scrollTop < scrollJson.scrollTop) {
       console.log(" resultJson.scroll = scrollJson", resultJson.scroll, scrollJson)
       resultJson.scroll = scrollJson
@@ -52,6 +53,5 @@ async function main(){
 
 }
 
-console.log("datalyの起動です")
 main();
 

@@ -62,6 +62,7 @@ async function closeExec(resultJson: resultjson, h: number, ) {
 
   const DATALYACCESSURL: string = process.env.DATALYACCESSURL
   if ("sendBeacon" in navigator) {
+    resultJson.end.datetime = ""
     navigator.sendBeacon(DATALYACCESSURL, JSON.stringify(resultJson));
   } else {
     const rq = new XMLHttpRequest();

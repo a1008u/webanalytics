@@ -27,7 +27,7 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
 
   // パートナーサイトIDの設定
   const datalyElement: HTMLElement = document.getElementById("__at_dataly")
-  const pSiteId: string = datalyElement.getAttribute("__atsiteid")
+  const pSiteId: string = datalyElement.getAttribute("__dsd")
   const pTitle: string = document.title;
   const partnerJson: partner = new partner(pSiteId, pTitle);
 

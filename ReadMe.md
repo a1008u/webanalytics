@@ -17,6 +17,7 @@ npm install --save-dev npm-run-all cpx rimraf
 npm install --save-dev eslint prettier @typescript-eslint/{eslint-plugin,parser} eslint-config-prettier eslint-plugin-prettier
 npm install --save-dev jest ts-jest @types/jest
 npm install --save uuid @types/uuid
+npm install --save js-sha256
 ```
 
 ## dockerについて

@@ -2,6 +2,8 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
+const crypto = require('crypto-browserify');
+
 // 環境ごとの環境変数を指定しているenvを選択する
 let envFile = null
 switch (process.env.NODE_ENV) {
@@ -40,7 +42,14 @@ module.exports = {
     extensions: ['.ts', '.js'],
   },
   externals:{
-    crypto: 'null'
+  //   fs:true,
+    crypto: crypto,
+    global: true
+  },
+  node:{
+    fs:true,
+    crypto: true,
+    global: true
   },
 
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、

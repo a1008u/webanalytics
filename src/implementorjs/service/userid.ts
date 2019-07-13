@@ -1,9 +1,7 @@
 import { storeInLocalStorage, getLocalStorage } from "../../common/localstorage";
 import { getQueryTargetKeyValue } from "./query";
-import { v4 as UUID } from 'uuid';
-// const sha256 = require('js-sha256');
-// const uuidv4 = require('uuid/v4')
-import uuid from 'uuid';
+import uuidv4 from 'uuid/v4';
+import sha256 from 'sha256';
 
 /**
  * Uid(user ID)の所得順序
@@ -16,14 +14,6 @@ import uuid from 'uuid';
 async function getUid(uidKey: string) : Promise<string>{
 
   console.log("-------------------------------------------------------------------------")
-  // const uuid: string = UUID();
-  // console.log(uuid)
-
-  // const tmpu = sha256(uuid)
-  // console.log("tmpu ",tmpu)
-
-  // console.log("uuidv4()  ------  ", uuidv4())
-  console.log(uuid());
 
     // localstorageck
     const atuid: string|null = await getLocalStorage(uidKey)
@@ -39,17 +29,11 @@ async function getUid(uidKey: string) : Promise<string>{
       storeInLocalStorage(queryUid)
       return queryUid;
     }
-  
-    // const uuid: string = UUID();
-    // const tmpu = sha256(uuid)
-    // console.log("tmpu ",tmpu)
 
-
-    // console.log("uuidv4()から取得 : ", uuid)
-    // storeInLocalStorage(uuid)
-    // return uuid
-
-    return "1111"
+    const uidSha256 = sha256(uuidv4())
+    console.log("sha256(uuidv4())から取得 : ", uidSha256)
+    storeInLocalStorage(uidSha256)
+    return uidSha256
   }
 
   export {getUid}

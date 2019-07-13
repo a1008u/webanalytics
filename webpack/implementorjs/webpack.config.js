@@ -2,7 +2,7 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
-const crypto = require('crypto-browserify');
+// const crypto = require('crypto-browserify');
 
 // 環境ごとの環境変数を指定しているenvを選択する
 let envFile = null
@@ -23,11 +23,9 @@ switch (process.env.NODE_ENV) {
 }
 
 module.exports = {
-  target: 'node',
   entry: {
       "ts":['./src/implementorjs/main.ts']
   },
-
   output: {
     // 出力するファイル名
     filename: 'atimplementorjs.min.js',
@@ -41,16 +39,16 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  externals:{
+  // externals:{
+  // //   fs:true,
+  //   crypto: crypto,
+  //   global: true
+  // },
+  // node:{
   //   fs:true,
-    crypto: crypto,
-    global: true
-  },
-  node:{
-    fs:true,
-    crypto: true,
-    global: true
-  },
+  //   crypto: true,
+  //   global: true
+  // },
 
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、
   // webpackがbundleファイルを作れるようになる。

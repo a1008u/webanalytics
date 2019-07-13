@@ -21,7 +21,6 @@ switch (process.env.NODE_ENV) {
 }
 
 module.exports = {
-  target: 'node',
   entry: {
       "ts":['./src/dataly/main.ts']
   },
@@ -40,10 +39,6 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js']
   },
-  externals:{
-    crypto: 'null'
-  },
-
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、
   // webpackがbundleファイルを作れるようになる。
   // testプロパティ：拡張子を指定して、あるLoaderがどのような種類のファイルを処理するべきなのか特定する(正規表現で拡張子を指定)

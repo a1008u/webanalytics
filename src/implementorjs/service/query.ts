@@ -1,3 +1,9 @@
+/**
+ * [パラメータ書き換え] accesstradeタグにuseridを付与する
+ * @param targetkey 
+ * @param queryKey 
+ * @param queryValue 
+ */
 async function changeQuery(targetkey: string, queryKey: string, queryValue: string){
   [].forEach.call(document.getElementsByTagName('a'), (aTag: HTMLAnchorElement) => {
     const targetAtagHref = aTag.getAttribute('href');

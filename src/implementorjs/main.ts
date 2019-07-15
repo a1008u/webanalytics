@@ -1,4 +1,4 @@
-import { ckCertificattionJson } from "./service/certification";
+import { ckCertificattionJson, storeSesstionStorage } from "./service/certification";
 import { mkDataly } from "./service/createService";
 import { getUid } from "./service/userid";
 　
@@ -15,17 +15,23 @@ async function main(__atinfo: AccessJson, useService :UseService) {
     __atinfo
   );
 
-  // uuid
-  const uidKey: string= "_atuid";
-  await getUid(uidKey)
+  // 認証できた場合のみ処理を行う
+  if (certificationJson) {
+    // certificationの情報をsessionstorageに保存
+    storeSesstionStorage(sessionStorageKey, certificationJson)
 
-  // 利用サービス確認と処理を行う
-  useService[certificationJson.BL.SE](sessionStorageKey, certificationJson)
+    // uuid生成
+    const uidKey: string= "__atud";
+    await getUid(uidKey)
 
-  // 外部サービスとの連携
-  certificationJson.OL.forEach(optionUrl => {
-    console.log(optionUrl)
-  })
+    // 利用サービス確認と処理を行う
+    useService[certificationJson.BL.SE](sessionStorageKey, certificationJson)
+
+    // 外部サービスとの連携
+    certificationJson.OL.forEach(optionUrl => {
+      console.log(optionUrl)
+    })
+  }
 }
 
 // 認証キーがある場合のみ実行

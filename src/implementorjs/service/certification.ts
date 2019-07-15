@@ -5,22 +5,35 @@ import { getSesstionStorage, storeSesstionStorage } from "../../common/sessionst
  * @param IMPLEMENTORJSACCESSURL 
  */
 async function getCertificationStatus(__atinfo: AccessJson, IMPLEMENTORJSACCESSURL: RequestInfo): Promise<any> {
-    const method = "POST";
-    const body = JSON.stringify(__atinfo);
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    };
-  
-    return new Promise(resolve => {
-      fetch(IMPLEMENTORJSACCESSURL, { method, headers, body })
-        .then(response => {
-          console.log(response, response.body);
-          return response.json();
-        })
-        .then(body => resolve(body));
-    });
-  }
+  const method = "POST";
+  const body = JSON.stringify(__atinfo);
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json"
+  };
+
+  const handleErrors = (res) => {
+    if (res.ok) {
+      return res;
+    }
+    switch (res.status) {
+      case 400: throw Error('INVALID_TOKEN');
+      case 401: throw Error('UNAUTHORIZED');
+      case 500: throw Error('INTERNAL_SERVER_ERROR');
+      case 502: throw Error('BAD_GATEWAY');
+      case 404: throw Error('NOT_FOUND');
+      default:  throw Error('UNHANDLED_ERROR');
+    }
+  };
+
+  return new Promise(resolve => {
+    fetch(IMPLEMENTORJSACCESSURL, { method, headers, body })
+      .catch((e) => { throw Error(e); })
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(body => resolve(body));
+  });
+}
 
 /**
  * 認証キーが有効かどうか確認する
@@ -39,13 +52,18 @@ async function ckCertificattionJson(key: string, __atinfo: AccessJson): Promise<
 
     // Cloud Datastoreからの取得(飛び先は、envから取得する)
     const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL
-    const certificationJson: CertificationJson = await getCertificationStatus(__atinfo, IMPLEMENTORJSACCESSURL);
-    console.log("datastoreから取得 --- ", certificationJson);
 
-    // sessionstorageに保存
-    storeSesstionStorage(key, certificationJson)
-
-    return certificationJson;
+    try {
+      const certificationJson = await getCertificationStatus(__atinfo, IMPLEMENTORJSACCESSURL);
+      if (certificationJson.error){
+        throw new Error(certificationJson.error)
+      }
+      return certificationJson;
+      // return new CertificationJson()
+    } catch(e){
+      console.log(e);
+      return null
+    }
 }
 
-export {ckCertificattionJson}
+export {ckCertificattionJson, storeSesstionStorage}

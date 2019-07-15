@@ -12,7 +12,8 @@
     "build_local_dev:implementorjs": "NODE_ENV=local_dev webpack --config webpack/implementorjs/webpack.config.js",
     "build_dev:dataly": "NODE_ENV=dev webpack --config webpack/dataly/webpack.config.js",
     "build_dev:implementorjs": "NODE_ENV=dev webpack --config webpack/implementorjs/webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --no-cache",
+    "test:coverage": "npm run test -- --coverage --no-cache",
     "lint": "eslint src/** --ext .ts,.tsx",
     "lint:dataly": "eslint src/dataly/** --ext .ts,.tsx",
     "lint:implementorjs": "eslint src/implementorjs/** --ext .ts,.tsx",
@@ -74,8 +75,6 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "moduleNameMapper": {
-      "\\.(css|less|sass|scss)$": "<rootDir>/src/vat/atvad/css/index.js",
-      "\\.(gif|ttf|eot|svg)$": "<rootDir>/src/vat/atvad/svg/play-circle-solid.svg"
     },
     "testEnvironment": "jsdom",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",

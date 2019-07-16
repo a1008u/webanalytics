@@ -1,6 +1,10 @@
-import { ckCertificattionJson, storeSesstionStorage } from "./service/certification";
+import { ckCertificattionJson } from "./service/certification";
 import { mkDataly } from "./service/createService";
 import { getUid } from "./service/userid";
+import { CertificationJson, __atinfo, AccessJson } from "./domain/certificateJson";
+import { UseService } from "./domain/useService";
+import { storeSesstionStorage } from "../common/sessionstorage";
+import { changeQuery } from "./service/query";
 　
 /**
  * メイン処理
@@ -22,10 +26,14 @@ async function main(__atinfo: AccessJson, useService :UseService) {
 
     // uuid生成
     const uidKey: string= "__atud";
-    await getUid(uidKey)
+    const uuid:string = await getUid(uidKey)
+    
+    // ancher elementのquery書き換え
+    const DELIVERYURL: string = process.env.DELIVERYURL
+    changeQuery(DELIVERYURL,"atud", uuid)
 
     // 利用サービス確認と処理を行う
-    useService[certificationJson.BL.SE](sessionStorageKey, certificationJson)
+    await useService[certificationJson.BL.SE](sessionStorageKey, certificationJson)
 
     // 外部サービスとの連携
     certificationJson.OL.forEach(optionUrl => {
@@ -39,7 +47,7 @@ if (__atinfo.Ay && __atinfo.Sd) {
 
   // 利用サービス処理
   const useService :UseService = {
-    Dataly:(sessionStorageKey: string, certificationJson: CertificationJson) => mkDataly(sessionStorageKey, certificationJson),
+    Dataly:(sessionStorageKey: string, certificationJson: CertificationJson) => mkDataly(certificationJson),
     unknown:(sessionStorageKey: string, certificationJson: CertificationJson) => {}
   }
   main(__atinfo, useService);

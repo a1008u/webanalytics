@@ -12,8 +12,7 @@
     "build_local_dev:implementorjs": "NODE_ENV=local_dev webpack --config webpack/implementorjs/webpack.config.js",
     "build_dev:dataly": "NODE_ENV=dev webpack --config webpack/dataly/webpack.config.js",
     "build_dev:implementorjs": "NODE_ENV=dev webpack --config webpack/implementorjs/webpack.config.js",
-    "test": "jest --no-cache",
-    "test:coverage": "npm run test -- --coverage --no-cache",
+    "test": "jest --coverage --no-cache",
     "lint": "eslint src/** --ext .ts,.tsx",
     "lint:dataly": "eslint src/dataly/** --ext .ts,.tsx",
     "lint:implementorjs": "eslint src/implementorjs/** --ext .ts,.tsx",
@@ -35,6 +34,7 @@
     "crypto-js": "^3.1.9-1",
     "dotenv": "^8.0.0",
     "fs": "0.0.1-security",
+    "jest-localstorage-mock": "^2.4.0",
     "js-sha256": "^0.9.0",
     "node": "^12.6.0",
     "save": "^2.4.0",
@@ -58,6 +58,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
+    "jest-fetch-mock": "^2.1.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
@@ -71,11 +72,15 @@
     "webpack-cli": "^3.2.3"
   },
   "jest": {
+    "setupFiles": [
+      "./test/setup/localstorageMock.js",
+      "./test/setup/sessionstorageMock.js",
+      "./test/setup/fetch.js"
+    ],
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "moduleNameMapper": {
-    },
+    "moduleNameMapper": {},
     "testEnvironment": "jsdom",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testURL": "http://localhost:8080/test.html",

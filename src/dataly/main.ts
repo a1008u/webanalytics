@@ -1,5 +1,4 @@
 import { pixelDepth, clickDepth, closeExec } from "./service/common";
-import { changeQuery } from "../implementorjs/service/query";
 import { init } from "./service/init";
 import { resultjson, scroll } from './domain/resultjson';
 
@@ -13,10 +12,6 @@ async function main(){
   h = document.documentElement.scrollHeight;  // ドキュメントの高さ
   clienth = document.documentElement.clientHeight;  //高さ
   resultJson = await init(h, clienth);
-
-  // ancher elementのquery書き換え（初期化後の処理）
-  const DELIVERYURL: string = process.env.DELIVERYURL
-  changeQuery(DELIVERYURL,"userid", resultJson.user.id)
 
   // scrollの処理
   window.addEventListener("scroll", async() => {

@@ -18,6 +18,8 @@ npm install --save-dev eslint prettier @typescript-eslint/{eslint-plugin,parser}
 npm install --save-dev jest ts-jest @types/jest
 npm install --save uuid @types/uuid
 npm install --save sha256 @types/sha256
+npm install --save jest-localstorage-mock
+npm install --save-dev jest-fetch-mock
 ```
 
 ## dockerについて

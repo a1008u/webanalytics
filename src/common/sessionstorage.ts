@@ -1,3 +1,5 @@
+import { CertificationJson } from "../../src/implementorjs/domain/certificateJson";
+
 /**
  *  sessionstorageからデータを格納する
  * @param key 

@@ -20,18 +20,36 @@ class CertificationJson {
   public BL:Baseurl
   // Optionurl(dataly以外のサービス)
   public OL:Array<Optionurl>
+
+  public constructor(SD:string, BL:Baseurl, OL:Array<Optionurl>){
+    this.SD = SD
+    this.BL = BL
+    this.OL = OL
+  }
 }
 
 class Baseurl {
   // サービス名
   public SE: string
   // タグ情報
-	public TG: string
+  public TG: string
+  
+  public constructor(SE:string, TG:string){
+    this.SE = SE
+    this.TG = TG
+  }
 }
 
 class Optionurl {
   // サービス名
   public SE: string
   // タグ情報
-	public TG: string
+  public TG: string
+  
+  public constructor(SE:string, TG:string){
+    this.SE = SE
+    this.TG = TG
+  }
 }
+
+export {__atinfo, Baseurl, Optionurl, CertificationJson, AccessJson}

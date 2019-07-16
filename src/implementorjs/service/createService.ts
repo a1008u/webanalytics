@@ -1,4 +1,5 @@
 import { storeSesstionStorage } from "../../common/sessionstorage";
+import { CertificationJson } from "../domain/certificateJson";
 
 /**
  * [タグ生成] Dataly用のタグを生成
@@ -8,9 +9,8 @@ import { storeSesstionStorage } from "../../common/sessionstorage";
  * @param sessionStorageKey 
  * @param certificationJson 
  */
-function mkDataly(sessionStorageKey: string, certificationJson: CertificationJson){
+async function mkDataly(certificationJson: CertificationJson){
   // 1.scriptタグの生成
-  storeSesstionStorage(sessionStorageKey, certificationJson);
   const scriptElement: HTMLScriptElement = document.createElement("script");
   // 2.属性の追加（datalyで利用するuseridを設定 + srcを追加）
   scriptElement.id = "__at_dataly";

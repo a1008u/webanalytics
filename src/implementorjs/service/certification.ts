@@ -1,4 +1,5 @@
 import { getSesstionStorage, storeSesstionStorage } from "../../common/sessionstorage";
+import { CertificationJson, AccessJson } from "../domain/certificateJson";
 
 /**
  * GAEにアクセスして、認証キーを取得する
@@ -59,11 +60,9 @@ async function ckCertificattionJson(key: string, __atinfo: AccessJson): Promise<
         throw new Error(certificationJson.error)
       }
       return certificationJson;
-      // return new CertificationJson()
     } catch(e){
-      console.log(e);
       return null
     }
 }
 
-export {ckCertificattionJson, storeSesstionStorage}
+export {ckCertificattionJson, getCertificationStatus}

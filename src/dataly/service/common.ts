@@ -29,12 +29,12 @@ function mkDateTime () : string {
  * @return {void}
  */
 async function pixelDepth(): Promise<scroll> {
-    const scrollJson: scroll = new scroll(
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.scrollTop
-    );
-    return scrollJson
+  const scrollJson: scroll = new scroll(
+    document.documentElement.clientHeight,
+    document.documentElement.scrollHeight,
+    document.documentElement.scrollTop
+  );
+  return scrollJson
 }
 
 // click位置の測定
@@ -55,10 +55,6 @@ async function closeExec(resultJson: resultjson, h: number, ) {
   const endJson: end = new end(enddateJst, h)
   resultJson.end = endJson;
   console.log('endに格納するJSON', endJson, '計測用のJSON最終形態', resultJson);
-
-  console.log("----------------");
-  console.log(resultJson);
-  console.log("----------------");
 
   const DATALYACCESSURL: string = process.env.DATALYACCESSURL
   if ("sendBeacon" in navigator) {

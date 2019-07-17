@@ -1,7 +1,7 @@
 import { ckCertificattionJson } from "./service/certification";
 import { mkDataly } from "./service/createService";
 import { getUid } from "./service/userid";
-import { CertificationJson, __atinfo, AccessJson } from "./domain/certificateJson";
+import { CertificationJson, AccessJson } from "./domain/certificateJson";
 import { UseService } from "./domain/useService";
 import { storeSesstionStorage } from "../common/sessionstorage";
 import { changeQuery } from "./service/query";
@@ -43,6 +43,7 @@ async function main(__atinfo: AccessJson, useService :UseService) {
 }
 
 // 認証キーがある場合のみ実行
+declare let __atinfo: AccessJson;
 if (__atinfo.Ay && __atinfo.Sd) {
 
   // 利用サービス処理

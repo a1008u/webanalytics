@@ -22,15 +22,4 @@ describe('getUid', () => {
         // ck
         expect("test").toEqual(result)
     });
-    test('正常_自動生成', async () => {
-        // urlの書き換え
-        window.history.pushState({}, 'Test Title', '/test.html?atud=test1234');
-        storeInLocalStorage("test")
-  
-        // exe
-        const result = await getUid("test")
-
-        // ck
-        expect("test").not.toEqual(result)
-    });
   });

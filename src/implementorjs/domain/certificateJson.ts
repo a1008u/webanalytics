@@ -1,4 +1,4 @@
-declare let __atinfo: AccessJson;
+// declare let __atinfo: AccessJson;
 
 class AccessJson {
   // accesskey
@@ -52,4 +52,4 @@ class Optionurl {
   }
 }
 
-export {__atinfo, Baseurl, Optionurl, CertificationJson, AccessJson}
+export {Baseurl, Optionurl, CertificationJson, AccessJson}

@@ -18,15 +18,6 @@ async function getUid(uidKey: string) : Promise<string>{
     console.log("local storageから取得 : ", atuid)
     return atuid;
   }
-  
-  // paramck
-  const queryUid: string|null = getQueryTargetKeyValue(location.search.substring(1), "atud=")
-  if(queryUid){
-    console.log("paramから取得 : ", queryUid)
-    storeInLocalStorage(queryUid)
-    return queryUid;
-  }
-
   const uidSha256 = sha256(uuidv4())
   console.log("sha256(uuidv4())から取得 : ", uidSha256)
   storeInLocalStorage(uidSha256)

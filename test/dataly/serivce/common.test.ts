@@ -1,5 +1,5 @@
 import { mkDateTime, pixelDepth, closeExec, clickDepth } from "../../../src/dataly/service/common";
-import {user,click,partner,scroll,start,end,resultjson} from "../../../src/dataly/domain/resultjson";
+import {ur,ck,pr,sl,st,ed,resultjson} from "../../../src/dataly/domain/resultjson";
 
 describe('mkDateTimeのテスト', () => {
   test('正常', async () => {
@@ -27,9 +27,9 @@ describe('pixelDepthのテスト', () => {
     const scrollJson = await pixelDepth()
 
     // ck
-    expect(scrollJson.clientHeight).toEqual(0);
-    expect(scrollJson.documentheight).toEqual(0);
-    expect(scrollJson.scrollTop).toEqual(0);
+    expect(scrollJson.ct).toEqual(0);
+    expect(scrollJson.dt).toEqual(0);
+    expect(scrollJson.sp).toEqual(0);
   });
 });
 

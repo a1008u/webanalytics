@@ -1,4 +1,4 @@
-import { click, scroll, resultjson, end } from "../domain/resultjson";
+import { ck, sl, resultjson, ed } from "../domain/resultjson";
 
 // 作業時間を作成
 function mkDateTime () : string {
@@ -28,8 +28,8 @@ function mkDateTime () : string {
     // , `見えていない高さ${Number(h)-Number(clienth)}`)
  * @return {void}
  */
-async function pixelDepth(): Promise<scroll> {
-  const scrollJson: scroll = new scroll(
+async function pixelDepth(): Promise<sl> {
+  const scrollJson: sl = new sl(
     document.documentElement.clientHeight,
     document.documentElement.scrollHeight,
     document.documentElement.scrollTop
@@ -38,10 +38,10 @@ async function pixelDepth(): Promise<scroll> {
 }
 
 // click位置の測定
-async function clickDepth(e: MouseEvent): Promise<click> {
+async function clickDepth(e: MouseEvent): Promise<ck> {
   const X: number = e.pageX; //X座標
   const Y: number  = e.pageY; //Y座標
-  return new click(X, Y);
+  return new ck(X, Y);
 }
 
 /**
@@ -52,13 +52,12 @@ async function clickDepth(e: MouseEvent): Promise<click> {
 async function closeExec(resultJson: resultjson, h: number, ) {
   console.log("イベントタイプ--------------------", event.type);
   const enddateJst: string = await mkDateTime();
-  const endJson: end = new end(enddateJst, h)
-  resultJson.end = endJson;
+  const endJson: ed = new ed(enddateJst, h)
+  resultJson.ed = endJson;
   console.log('endに格納するJSON', endJson, '計測用のJSON最終形態', resultJson);
 
   const DATALYACCESSURL: string = process.env.DATALYACCESSURL
   if ("sendBeacon" in navigator) {
-    resultJson.end.datetime = ""
     navigator.sendBeacon(DATALYACCESSURL, JSON.stringify(resultJson));
   } else {
     const rq = new XMLHttpRequest();

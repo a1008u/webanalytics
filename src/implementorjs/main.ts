@@ -39,6 +39,8 @@ async function main(__atinfo: AccessJson, useService :UseService) {
     certificationJson.OL.forEach(optionUrl => {
       console.log(optionUrl)
     })
+
+    debugger;
   }
 }
 
@@ -53,3 +55,8 @@ if (__atinfo.Ay && __atinfo.Sd) {
   }
   main(__atinfo, useService);
 }
+// window.addEventListener("load", function(event) {
+  
+
+// });
+

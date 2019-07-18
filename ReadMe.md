@@ -43,10 +43,50 @@ docker-compose up --build
 ## webpackについて
 ### localhostでGAEを起動した場合
 ```npm
+// mac,linux用
 npm run build_local_dev
+
+// windows用
+npm run win_build_local_dev
 ```
 
 ### GCP上にGAEを起動した場合
 ```npm
 npm run build_dev
+```
+
+--------------------------------------------------------------
+
+## 発行されるタグ
+### dev用
+```
+<script>
+    var __atinfo = {
+    "Ay":"ここにはaccesskeyが記載されます。",
+    "Sd":"ここにサイトIDが記載されます。"
+    }
+    (function(d){var s=d.createElement('script');s.src='../../js/implementorjs/atimplementorjs.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
+</script> 
+```
+
+### staging用
+```
+<script>
+    var __atinfo = {
+    "Ay":"ここにはaccesskeyが記載されます。",
+    "Sd":"ここにサイトIDが記載されます。"
+    }
+    (function(d){var s=d.createElement('script');s.src='../../js/implementorjs/atimplementorjs.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
+</script> 
+```
+
+### production用
+```
+<script>
+    var __atinfo = {
+    "Ay":"ここにはaccesskeyが記載されます。",
+    "Sd":"ここにサイトIDが記載されます。"
+    }
+    (function(d){var s=d.createElement('script');s.src='../../js/implementorjs/atimplementorjs.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
+</script> 
 ```

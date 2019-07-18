@@ -1,5 +1,5 @@
 import { mkDateTime, pixelDepth} from "./common"
-import { user, partner, scroll, start, resultjson, click } from "../domain/resultjson";
+import { ur, pr, sl, st, resultjson, ck } from "../domain/resultjson";
 import { getLocalStorage } from "../../common/localstorage";
 
 
@@ -23,22 +23,22 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
   const url = location.href
   const referrer = document.referrer
   const ua = window.navigator.userAgent.toLowerCase();
-  const userJson: user = new user(uuid, referrer, url, ua)
+  const userJson: ur = new ur(uuid, referrer, url, ua)
 
   // パートナーサイトIDの設定
   const datalyElement: HTMLElement = document.getElementById("__at_dataly")
   const pSiteId: string = datalyElement.getAttribute("__dsd")
   const pTitle: string = document.title;
-  const partnerJson: partner = new partner(pSiteId, pTitle);
+  const partnerJson: pr = new pr(pSiteId, pTitle);
 
   // scroll初期化
-  const scrolljson: scroll = await pixelDepth()
+  const scrolljson: sl = await pixelDepth()
 
   // startJson初期化
   // js起動時間の確認
   const startdateJst = await mkDateTime()
   const scrollTop: number = document.documentElement.scrollTop
-  const startjson: start = new start(clienth, startdateJst, h, scrollTop)
+  const startjson: st = new st(clienth, startdateJst, h, scrollTop)
 
   // 終了以外の情報でオブジェクト生成
   return new resultjson(
@@ -47,7 +47,7 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
     scrolljson,
     startjson,
     null,
-    new Array<click>()
+    new Array<ck>()
   )
 }
 

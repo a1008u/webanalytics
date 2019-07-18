@@ -1,5 +1,5 @@
 import { init } from "../../../src/dataly/service/init";
-import {user,click,partner,scroll,start,end,resultjson} from "../../../src/dataly/domain/resultjson";
+import {ur,ck,pr,sl,st,ed,resultjson} from "../../../src/dataly/domain/resultjson";
 import { storeInLocalStorage} from "../../../src/common/localstorage";
 
 
@@ -19,11 +19,11 @@ test('正常', async () => {
   // expectの準備
   const expecth:number = 1000
   const expectclienth:number = 100
-  const expectuser:user = new user("test","","http://localhost:8080/test.html",window.navigator.userAgent.toLowerCase(),)
-  const expectpartner:partner = new partner("test","")
-  const expectstart: start = new start(expectclienth,"test7",expecth,0)
-  const expectscroll: scroll = new scroll(0,0,0)
-  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, new Array<click>())
+  const expectuser:ur = new ur("test","","http://localhost:8080/test.html",window.navigator.userAgent.toLowerCase(),)
+  const expectpartner:pr = new pr("test","")
+  const expectstart: st = new st(expectclienth,"test7",expecth,0)
+  const expectscroll: sl = new sl(0,0,0)
+  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, new Array<ck>())
   const date = new Date();
   const expectDateJST: string = date.getFullYear()
   + '-' + ('0' + (date.getMonth() + 1)).slice(-2)
@@ -35,14 +35,14 @@ test('正常', async () => {
   let actualResultjson = await init(expecth, expectclienth)
 
   // ck
-  expect(actualResultjson.click).toEqual(expectresultjson.click);
-  expect(actualResultjson.end).toEqual(expectresultjson.end);
-  expect(actualResultjson.partner).toEqual(expectresultjson.partner);
-  expect(actualResultjson.scroll).toEqual(expectresultjson.scroll);
-  expect(actualResultjson.start.clientheight).toEqual(expectresultjson.start.clientheight);
-  expect(actualResultjson.start.datetime).toContain(expectDateJST);
-  expect(actualResultjson.start.documentheight).toEqual(expectresultjson.start.documentheight);
-  expect(actualResultjson.start.scrollTop).toEqual(expectresultjson.start.scrollTop);
-  expect(actualResultjson.user).toEqual(expectresultjson.user);
+  expect(actualResultjson.ck).toEqual(expectresultjson.ck);
+  expect(actualResultjson.ed).toEqual(expectresultjson.ed);
+  expect(actualResultjson.pr).toEqual(expectresultjson.pr);
+  expect(actualResultjson.sl).toEqual(expectresultjson.sl);
+  expect(actualResultjson.st.ct).toEqual(expectresultjson.st.ct);
+  expect(actualResultjson.st.de).toContain(expectDateJST);
+  expect(actualResultjson.st.dt).toEqual(expectresultjson.st.dt);
+  expect(actualResultjson.st.sp).toEqual(expectresultjson.st.sp);
+  expect(actualResultjson.ur).toEqual(expectresultjson.ur);
   });
 });

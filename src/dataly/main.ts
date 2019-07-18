@@ -1,6 +1,6 @@
 import { pixelDepth, clickDepth, closeExec } from "./service/common";
 import { init } from "./service/init";
-import { resultjson, scroll } from './domain/resultjson';
+import { resultjson, sl } from './domain/resultjson';
 
 async function main(){
 
@@ -15,11 +15,11 @@ async function main(){
 
   // scrollの処理
   window.addEventListener("scroll", async() => {
-    const scrollJson: scroll = await pixelDepth()
+    const scrollJson: sl = await pixelDepth()
     // scrollは常に一番深くスクロールした情報を取得する
-    if (resultJson.scroll.scrollTop < scrollJson.scrollTop) {
-      console.log(" resultJson.scroll = scrollJson", resultJson.scroll, scrollJson)
-      resultJson.scroll = scrollJson
+    if (resultJson.sl.sp < scrollJson.sp) {
+      console.log(" resultJson.scroll = scrollJson", resultJson.sl, scrollJson)
+      resultJson.sl = scrollJson
     }
   })
 
@@ -27,7 +27,7 @@ async function main(){
   window.addEventListener("click", async(e: MouseEvent) => {
     const clickJson = await clickDepth(e);
     console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
-    resultJson.click.push(clickJson)
+    resultJson.ck.push(clickJson)
   })
 
   // タブ移動および画面遷移時の処理
@@ -49,5 +49,3 @@ async function main(){
 }
 
 main();
-
-export{main}

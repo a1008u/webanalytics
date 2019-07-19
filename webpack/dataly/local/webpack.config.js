@@ -1,33 +1,8 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
-
-// 環境ごとの環境変数を指定しているenvを選択する
-let envFile = process.env.NODE_ENV
-console.log("--------------------")
-console.log(process.env.NODE_ENV)
-console.log(envFile)
-console.log(process.env.NODE_ENV === "dev/.env-dev")
-console.log(typeof process.env.NODE_ENV)
-console.log("--------------------")
-// switch (process.env.NODE_ENV) {
-//   case "dev":
-//     envFile = "dev/gcp/.env-dev"
-//     break;
-//   case "staging":
-//     envFile = "staging/.env"
-//     break;
-//   case "production":
-//     envFile = "production/.env"
-//     break;
-//   case "local_dev":
-//     envFile = "dev/.env-local-dev"
-//     break;
-// }
-
-// console.log("--------------------")
-// console.log(envFile)
-// console.log("--------------------")
+const dir = '../../.env/'
+const envfile = "dev/gcp/.env-dev"
 
 module.exports = {
   entry: {
@@ -38,10 +13,10 @@ module.exports = {
     // 出力するファイル名
     filename: 'dataly.min.js',
     // 出力先のパス（絶対パスを指定する必要がある）
-    path: path.join(__dirname, '../../public/js/dataly')
+    path: path.join(__dirname, '../../../public/js/dataly')
   },
   plugins: [
-    new Dotenv({ path:  path.resolve(__dirname, '../.env/', envFile)})
+    new Dotenv({ path:  path.resolve(__dirname, dir, envfile)})
   ],
   mode: 'development'
   ,

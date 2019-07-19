@@ -53,7 +53,7 @@ async function ckCertificattionJson(key: string, __atinfo: AccessJson): Promise<
 
     // Cloud Datastoreからの取得(飛び先は、envから取得する)
     const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL
-
+    console.log(process.env.IMPLEMENTORJSACCESSURL)
     try {
       const certificationJson = await getCertificationStatus(__atinfo, IMPLEMENTORJSACCESSURL);
       if (certificationJson.error){

@@ -5,22 +5,33 @@ const Dotenv = require('dotenv-webpack');
 // const crypto = require('crypto-browserify');
 
 // 環境ごとの環境変数を指定しているenvを選択する
-let envFile = null
-switch (process.env.NODE_ENV) {
-  case "dev":
-    envFile = "dev/.env-dev"
-    break;
-  case "staging":
-    envFile = "staging/.env"
-    break;
-  case "production":
-    envFile = "production/.env"
-    break;
-  case "local_dev":
-  default:
-    envFile = "dev/.env-local-dev"
-    break;
-}
+let envFile = process.env.NODE_ENV
+console.log("--------------------")
+console.log(process.env.NODE_ENV)
+console.log(typeof process.env.NODE_ENV)
+console.log(process.env.NODE_ENV === "dev/.env-dev")
+
+console.log(typeof envFile)
+console.log(envFile)
+console.log("--------------------")
+// switch (process.env.NODE_ENV) {
+//   case "dev":
+//     envFile = "dev/gcp/.env-dev"
+//     break;
+//   case "staging":
+//     envFile = "staging/.env"
+//     break;
+//   case "production":
+//     envFile = "production/.env"
+//     break;
+//   case "local_dev":
+//     envFile = "dev/.env-local-dev"
+//     break;
+// }
+
+// console.log("--------------------")
+// console.log(envFile)
+// console.log("--------------------")
 
 module.exports = {
   entry: {
@@ -33,7 +44,7 @@ module.exports = {
     path: path.join(__dirname, '../../public/js/implementorjs/')
   },
   plugins: [
-    new Dotenv({ path:  path.resolve(__dirname, '../.env/', envFile)})
+    new Dotenv({ path:  path.resolve(__dirname, '../.env/', "dev/.env-local-dev")})
   ],
   mode: 'development',
   resolve: {

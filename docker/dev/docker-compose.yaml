@@ -12,4 +12,5 @@ services:
       bash -c "
       ls -la && 
       pwd && 
-      npm run build_local_dev"
+      npm install &&
+      npm run build_dev"

@@ -55,8 +55,4 @@ if (__atinfo.Ay && __atinfo.Sd) {
   }
   main(__atinfo, useService);
 }
-// window.addEventListener("load", function(event) {
-  
-
-// });
 

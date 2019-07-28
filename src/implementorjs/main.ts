@@ -1,11 +1,12 @@
 import { ckCertificattionJson } from "./service/certification";
 import { mkDataly } from "./service/createService";
 import { getUid } from "./service/userid";
+import { changeQuery } from "./service/query";
+
 import { CertificationJson, AccessJson } from "./domain/certificateJson";
 import { UseService } from "./domain/useService";
 import { storeSesstionStorage } from "../common/sessionstorage";
-import { changeQuery } from "./service/query";
-　
+
 /**
  * メイン処理
  * @param __atinfo 

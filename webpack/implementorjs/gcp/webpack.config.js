@@ -4,7 +4,8 @@ const baseConfig = require('../webpack.base.config');
 const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const dir = "../../.env/";
-const envfile = "dev/local/.env";
+
+const envfile = "dev/gcp/.env";
 
 module.exports = merge(baseConfig, {
   plugins: [new Dotenv({ path: path.resolve(__dirname, dir, envfile) })],

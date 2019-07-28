@@ -20,6 +20,8 @@ npm install --save uuid @types/uuid
 npm install --save sha256 @types/sha256
 npm install --save jest-localstorage-mock
 npm install --save-dev jest-fetch-mock
+npm install --save es6-promise fetch-polyfill sendbeacon-polyfill
+npm install --save webpack-merge exports-loader imports
 ```
 
 ## dockerについて

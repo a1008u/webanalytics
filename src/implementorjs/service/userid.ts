@@ -1,5 +1,4 @@
 import { storeInLocalStorage, getLocalStorage } from "../../common/localstorage";
-import { getQueryTargetKeyValue } from "./query";
 import uuidv4 from 'uuid/v4';
 import sha256 from 'sha256';
 

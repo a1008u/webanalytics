@@ -1,4 +1,3 @@
-import { storeSesstionStorage } from "../../common/sessionstorage";
 import { CertificationJson } from "../domain/certificateJson";
 
 /**

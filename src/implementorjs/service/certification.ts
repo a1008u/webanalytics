@@ -1,5 +1,5 @@
-import { getSesstionStorage, storeSesstionStorage } from "../../common/sessionstorage";
 import { CertificationJson, AccessJson } from "../domain/certificateJson";
+import { getSesstionStorage } from "../../common/sessionstorage";
 
 /**
  * GAEにアクセスして、認証キーを取得する
@@ -23,7 +23,7 @@ async function getCertificationStatus(__atinfo: AccessJson, IMPLEMENTORJSACCESSU
       case 500: throw Error('INTERNAL_SERVER_ERROR');
       case 502: throw Error('BAD_GATEWAY');
       case 404: throw Error('NOT_FOUND');
-      default:  throw Error('UNHANDLED_ERROR');
+      default: throw Error('UNHANDLED_ERROR');
     }
   };
 
@@ -44,25 +44,25 @@ async function getCertificationStatus(__atinfo: AccessJson, IMPLEMENTORJSACCESSU
  */
 async function ckCertificattionJson(key: string, __atinfo: AccessJson): Promise<CertificationJson> {
 
-    // sesssionStorageに認証情報があるか確認
-    const certificationJsonSesstion: CertificationJson = await getSesstionStorage(key);
-    if (certificationJsonSesstion) {
-        console.log("session storageから取得 --- ", certificationJsonSesstion);
-        return certificationJsonSesstion;
-    }
+  // sesssionStorageに認証情報があるか確認
+  const certificationJsonSesstion: CertificationJson = await getSesstionStorage(key);
+  if (certificationJsonSesstion) {
+    console.log("session storageから取得 --- ", certificationJsonSesstion);
+    return certificationJsonSesstion;
+  }
 
-    // Cloud Datastoreからの取得(飛び先は、envから取得する)
-    const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL
-    console.log(process.env.IMPLEMENTORJSACCESSURL)
-    try {
-      const certificationJson = await getCertificationStatus(__atinfo, IMPLEMENTORJSACCESSURL);
-      if (certificationJson.error){
-        throw new Error(certificationJson.error)
-      }
-      return certificationJson;
-    } catch(e){
-      return null
+  // Cloud Datastoreからの取得(飛び先は、envから取得する)
+  const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL
+  console.log(process.env.IMPLEMENTORJSACCESSURL)
+  try {
+    const certificationJson = await getCertificationStatus(__atinfo, IMPLEMENTORJSACCESSURL);
+    if (certificationJson.error) {
+      throw new Error(certificationJson.error)
     }
+    return certificationJson;
+  } catch (e) {
+    return null
+  }
 }
 
-export {ckCertificattionJson, getCertificationStatus}
+export { ckCertificattionJson, getCertificationStatus }

@@ -5,8 +5,8 @@
   "main": "test.js",
   "scripts": {
     "win_build_local_dev": "npm-run-all clean cpx:file win_build_local_dev:*",
-    "win_build_local_dev:dataly": "webpack --config webpack/dataly/local/webpack.local.config.js",
-    "win_build_local_dev:implementorjs": "webpack --config webpack/implementorjs/local/webpack.local.config.js",
+    "win_build_local_dev:dataly": "webpack --config webpack/dataly/local/webpack.config.js",
+    "win_build_local_dev:implementorjs": "webpack --config webpack/implementorjs/local/webpack.config.js",
     "build_local_dev": "npm-run-all clean cpx:file build_local_dev:*",
     "build_local_dev:dataly": "webpack --config webpack/dataly/local/webpack.config.js",
     "build_local_dev:implementorjs": "webpack --config webpack/implementorjs/local/webpack.config.js",

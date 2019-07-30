@@ -8,9 +8,6 @@ services:
     container_name: dataly_build_local_dev
     volumes:
       - ../../:/app
-    command: 
-      bash -c "
-      ls -la && 
-      pwd && 
-      npm install &&
-      npm run build_dev"
+    command: sh -c "
+      npm i -f &&
+      npm run build_local_dev"

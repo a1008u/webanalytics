@@ -1,8 +1,9 @@
 {
   "name": "certification_dataly",
   "version": "1.0.0",
-  "description": "",
+  "description": "certification&dataly",
   "main": "main.js",
+  "repository": "public",
   "scripts": {
     "win_build_local_dev": "npm-run-all clean cpx:file win_build_local_dev:*",
     "win_build_local_dev:dataly": "webpack --config webpack/dataly/local/webpack.config.js",
@@ -68,8 +69,8 @@
     "@types/dotenv": "^6.1.1",
     "@types/dotenv-webpack": "^1.7.0",
     "@types/jest": "^24.0.15",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "@typescript-eslint/parser": "^1.11.0",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "babel-loader": "^8.0.5",
     "cpx": "^1.5.0",
     "dotenv-webpack": "^1.7.0",

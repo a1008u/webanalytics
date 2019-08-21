@@ -40,8 +40,6 @@ async function main(__atinfo: AccessJson, useService :UseService) {
     certificationJson.OL.forEach(optionUrl => {
       console.log(optionUrl)
     })
-
-    debugger;
   }
 }
 
@@ -51,7 +49,7 @@ if (__atinfo.Ay && __atinfo.Sd) {
 
   // 利用サービス処理
   const useService :UseService = {
-    Dataly:(sessionStorageKey: string, certificationJson: CertificationJson) => mkDataly(certificationJson),
+    DatAly:(sessionStorageKey: string, certificationJson: CertificationJson) => mkDataly(certificationJson),
     unknown:(sessionStorageKey: string, certificationJson: CertificationJson) => {}
   }
   main(__atinfo, useService);

@@ -1,4 +1,4 @@
-import { pixelDepth, clickDepth, closeExec } from "./service/common";
+import { pixelDepth, closeExec } from "./service/common";
 import { init } from "./service/init";
 import { resultjson, sl } from './domain/resultjson';
 
@@ -23,12 +23,12 @@ async function main(){
     }
   })
 
-  // click時の処理
-  window.addEventListener("click", async(e: MouseEvent) => {
-    const clickJson = await clickDepth(e);
-    console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
-    resultJson.ck.push(clickJson)
-  })
+  // click時の処理（今後実装）
+  // window.addEventListener("click", async(e: MouseEvent) => {
+  //   const clickJson = await clickDepth(e);
+  //   console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
+  //   resultJson.ck.push(clickJson)
+  // })
 
   // タブ移動および画面遷移時の処理
   window.addEventListener("visibilitychange", async() => {

@@ -10,15 +10,24 @@ class resultjson{
   // end情報（ページ離脱時のjs取得情報）
   public ed: ed;
   // click情報
-  public ck: Array<ck>
+  // public ck: Array<ck>
 
-  public constructor(ur: ur, pr:pr, sl: sl, st: st, ed: ed, ck: Array<ck>){
+  // public constructor(ur: ur, pr:pr, sl: sl, st: st, ed: ed, ck: Array<ck>){
+  //   this.ur = ur
+  //   this.pr = pr
+  //   this.sl = sl
+  //   this.st = st
+  //   this.ed = ed
+  //   this.ck = ck
+  // }
+
+  
+  public constructor(ur: ur, pr:pr, sl: sl, st: st, ed: ed){
     this.ur = ur
     this.pr = pr
     this.sl = sl
     this.st = st
     this.ed = ed
-    this.ck = ck
   }
 }
 

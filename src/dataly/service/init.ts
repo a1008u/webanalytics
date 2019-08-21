@@ -46,8 +46,7 @@ async function init(h: number, clienth: number) : Promise<resultjson> {
     partnerJson,
     scrolljson,
     startjson,
-    null,
-    new Array<ck>()
+    null
   )
 }
 

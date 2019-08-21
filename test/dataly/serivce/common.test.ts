@@ -1,4 +1,4 @@
-import { mkDateTime, pixelDepth, closeExec, clickDepth } from "../../../src/dataly/service/common";
+import { mkDateTime, pixelDepth, closeExec} from "../../../src/dataly/service/common";
 import {ur,ck,pr,sl,st,ed,resultjson} from "../../../src/dataly/domain/resultjson";
 
 describe('mkDateTimeのテスト', () => {

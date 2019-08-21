@@ -38,11 +38,11 @@ async function pixelDepth(): Promise<sl> {
 }
 
 // click位置の測定
-async function clickDepth(e: MouseEvent): Promise<ck> {
-  const X: number = e.pageX; //X座標
-  const Y: number  = e.pageY; //Y座標
-  return new ck(X, Y);
-}
+// async function clickDepth(e: MouseEvent): Promise<ck> {
+//   const X: number = e.pageX; //X座標
+//   const Y: number  = e.pageY; //Y座標
+//   return new ck(X, Y);
+// }
 
 /**
  * 認証が有効な場合、gaeにdatalyのデータを転送する。
@@ -67,4 +67,4 @@ async function closeExec(resultJson: resultjson, h: number, ) {
 }
 
 
-export {mkDateTime, pixelDepth, clickDepth, closeExec}
+export {mkDateTime, pixelDepth, closeExec}

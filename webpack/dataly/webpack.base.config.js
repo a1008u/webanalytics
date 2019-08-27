@@ -41,6 +41,5 @@ module.exports = {
       fetch: "imports?this=>global!exports?global.fetch!whatwg-fetch",
       sendBeacon: "sendbeacon-polyfill"
     })
-  ],
-  devtool: "source-map"
+  ]
 };

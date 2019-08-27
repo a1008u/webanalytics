@@ -1,27 +1,29 @@
 import { pixelDepth, closeExec } from "./service/common";
 import { init } from "./service/init";
-import { resultjson, sl } from './domain/resultjson';
+import { resultjson, sl } from "./domain/resultjson";
 
-async function main(){
-
+async function main(): Promise<void> {
   // 再利用変数（画面遷移時とタブがvisibleの時に代入されます。）
   let h: number, clienth: number;
   let resultJson: resultjson;
 
   // 計測用のJSON最終形態(start、end、scroll、clickは下記で追加する。)
-  h = document.documentElement.scrollHeight;  // ドキュメントの高さ
-  clienth = document.documentElement.clientHeight;  //高さ
+  h = document.documentElement.scrollHeight; // ドキュメントの高さ
+  clienth = document.documentElement.clientHeight; //高さ
   resultJson = await init(h, clienth);
 
   // scrollの処理
-  window.addEventListener("scroll", async() => {
-    const scrollJson: sl = await pixelDepth()
-    // scrollは常に一番深くスクロールした情報を取得する
-    if (resultJson.sl.sp < scrollJson.sp) {
-      console.log(" resultJson.scroll = scrollJson", resultJson.sl, scrollJson)
-      resultJson.sl = scrollJson
+  window.addEventListener(
+    "scroll",
+    async (): Promise<void> => {
+      const scrollJson: sl = await pixelDepth();
+      // scrollは常に一番深くスクロールした情報を取得する
+      if (resultJson.sl.sp < scrollJson.sp) {
+        // console.log(" resultJson.scroll = scrollJson",resultJson.sl,scrollJson);
+        resultJson.sl = scrollJson;
+      }
     }
-  })
+  );
 
   // click時の処理（今後実装）
   // window.addEventListener("click", async(e: MouseEvent) => {
@@ -31,21 +33,23 @@ async function main(){
   // })
 
   // タブ移動および画面遷移時の処理
-  window.addEventListener("visibilitychange", async() => {
-    const visibilityState = document.visibilityState
-    if (visibilityState === "hidden") {
-      console.log("イベントタイプ", event.type);
-      closeExec(resultJson, h);
-    }
+  window.addEventListener(
+    "visibilitychange",
+    async (): Promise<void> => {
+      const visibilityState = document.visibilityState;
+      if (visibilityState === "hidden") {
+        // console.log("イベントタイプ", event.type);
+        closeExec(resultJson, h);
+      }
 
-    if (visibilityState === "visible"){
-      console.log("イベントタイプ", event.type);
-      h = document.documentElement.scrollHeight;  // ドキュメントの高さ
-      clienth = document.documentElement.clientHeight;  //高さ
-      resultJson = await init(h, clienth);
+      if (visibilityState === "visible") {
+        // console.log("イベントタイプ", event.type);
+        h = document.documentElement.scrollHeight; // ドキュメントの高さ
+        clienth = document.documentElement.clientHeight; //高さ
+        resultJson = await init(h, clienth);
+      }
     }
-  });
-
+  );
 }
 
 main();

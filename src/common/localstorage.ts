@@ -3,17 +3,17 @@
  * @param {string} key
  * @returns {paramjson}
  */
-async function getLocalStorage(key: string) : Promise<string| null>{
+async function getLocalStorage(key: string): Promise<string | null> {
   const value: string = localStorage.getItem(key);
-  return value? value: null;
-};
+  return value ? value : null;
+}
 
 /**
  * localstorageに値 + localstorageの有効期限を格納する
  * @param uuid
  */
-function storeInLocalStorage(uuid: string){
-  localStorage.setItem('_atuid', uuid);
+function storeInLocalStorage(uuid: string): void {
+  localStorage.setItem("_atuid", uuid);
 }
 
-export {getLocalStorage, storeInLocalStorage}
+export { getLocalStorage, storeInLocalStorage };

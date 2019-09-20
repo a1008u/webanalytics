@@ -1,0 +1,37 @@
+steps:
+  ###########################################################
+  # Step 1: npm install , test and build
+  ###########################################################
+  - name: 'gcr.io/cloud-builders/npm'
+    id: npm-install
+    args: ['install']
+    waitFor: ['-']
+  - name: 'gcr.io/cloud-builders/npm'
+    id: npm-test
+    args: ['run','test']
+    waitFor: ['npm-install']
+  - name: 'gcr.io/cloud-builders/npm'
+    id: npm_build_dev
+    args: ['run','build_dev']
+    waitFor: ['npm-test']
+  ###########################################################
+  # Step 2: gcloud copy step
+  ###########################################################
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'cp-dataly.js'
+    args: ['cp', 'public/js/dataly/dataly.min.js', 'gs://dev_script.atdataly.jp/script/dataly.min.js']
+    waitFor: ['npm_build_dev']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'cp-dataly.js.map'
+    args: ['cp', 'public/js/dataly/dataly.min.js.map', 'gs://dev_script.atdataly.jp/script/dataly.min.js.map']
+    waitFor: ['npm_build_dev']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'cp-atimplementorjs.min.js'
+    args: ['cp', 'public/js/implementorjs/atimplementorjs.min.js', 'gs://dev_script.atdataly.jp/script/atimplementorjs.min.js']
+    waitFor: ['npm_build_dev']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'cp-atimplementorjs.min.js.map'
+    args: ['cp', 'public/js/implementorjs/atimplementorjs.min.js.map', 'gs://dev_script.atdataly.jp/script/atimplementorjs.min.js.map']
+    waitFor: ['npm_build_dev']
+
+  

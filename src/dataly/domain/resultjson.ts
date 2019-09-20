@@ -56,11 +56,14 @@ class UR {
   public ua: string;
   // url情報
   public url: string;
-  public constructor(id: string, rr: string, url: string, ua: string) {
+  // ipアドレス情報
+  public ip: string;
+  public constructor(id: string, rr: string, url: string, ua: string, ip :string) {
     this.id = id;
     this.rr = rr;
     this.url = url;
     this.ua = ua;
+    this.ip = ip;
   }
 }
 

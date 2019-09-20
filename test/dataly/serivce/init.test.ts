@@ -1,7 +1,7 @@
 import { init } from "../../../src/dataly/service/init";
 import {ur,ck,pr,sl,st,ed,resultjson} from "../../../src/dataly/domain/resultjson";
 import { storeInLocalStorage} from "../../../src/common/localstorage";
-
+import ip from "ip";
 
 describe('initのテスト', () => {
 
@@ -19,7 +19,7 @@ test('正常', async () => {
   // expectの準備
   const expecth:number = 1000
   const expectclienth:number = 100
-  const expectuser:ur = new ur("test","","http://localhost:8080/test.html",window.navigator.userAgent.toLowerCase(),)
+  const expectuser:ur = new ur("test","","http://localhost:8080/test.html",window.navigator.userAgent.toLowerCase(), '')
   const expectpartner:pr = new pr("test","")
   const expectstart: st = new st(expectclienth,"test7",expecth,0)
   const expectscroll: sl = new sl(0,0,0)

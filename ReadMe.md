@@ -23,6 +23,8 @@ npm install --save jest-localstorage-mock
 npm install --save-dev jest-fetch-mock
 npm install --save es6-promise fetch-polyfill sendbeacon-polyfill
 npm install --save webpack-merge exports-loader imports
+npm install --save ip @types/ip
+npm install --save ip-address @types/ip-address
 ```
 
 ## dockerについて

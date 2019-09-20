@@ -1,6 +1,7 @@
 import { mkDateTime, pixelDepth } from "./common";
 import { ur, pr, sl, st, resultjson } from "../domain/resultjson";
 import { getLocalStorage } from "../../common/localstorage";
+import ip from "ip";
 
 /**
  * 初期化
@@ -21,7 +22,7 @@ async function init(h: number, clienth: number): Promise<resultjson> {
   const url = location.href;
   const referrer = document.referrer;
   const ua = window.navigator.userAgent.toLowerCase();
-  const userJson: ur = new ur(uuid, referrer, url, ua);
+  const userJson: ur = new ur(uuid, referrer, url, ua, "");
 
   // パートナーサイトIDの設定
   const datalyElement: HTMLElement = document.getElementById("__at_dataly");

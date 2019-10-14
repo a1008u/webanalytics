@@ -7,7 +7,7 @@ describe('initのテスト', () => {
 
   beforeEach(() => {
     document.body.innerHTML = `<script async id='__at_dataly' __dsd="test" ></script>`;
-    storeInLocalStorage("test")
+    storeInLocalStorage("_atuid","test")
   });
   afterEach(() => {
     let element = document.getElementById('__at_dataly');
@@ -19,11 +19,11 @@ test('正常', async () => {
   // expectの準備
   const expecth:number = 1000
   const expectclienth:number = 100
-  const expectuser:ur = new ur("test","","http://localhost:8080/test.html",window.navigator.userAgent.toLowerCase(), '')
+  const expectuser:ur = new ur("test", 1,"","http://localhost:8080/test.html",window.navigator.userAgent.toLowerCase(), '','','','')
   const expectpartner:pr = new pr("test","")
-  const expectstart: st = new st(expectclienth,"test7",expecth,0)
+  const expectstart: st = new st(expectclienth,'','',"test7",expecth,0)
   const expectscroll: sl = new sl(0,0,0)
-  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
+  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null,null)
   const date = new Date();
   const expectDateJST: string = date.getFullYear()
   + '-' + ('0' + (date.getMonth() + 1)).slice(-2)
@@ -39,7 +39,7 @@ test('正常', async () => {
   expect(actualResultjson.pr).toEqual(expectresultjson.pr);
   expect(actualResultjson.sl).toEqual(expectresultjson.sl);
   expect(actualResultjson.st.ct).toEqual(expectresultjson.st.ct);
-  expect(actualResultjson.st.de).toContain(expectDateJST);
+  expect(actualResultjson.st.dl).toContain(expectDateJST);
   expect(actualResultjson.st.dt).toEqual(expectresultjson.st.dt);
   expect(actualResultjson.st.sp).toEqual(expectresultjson.st.sp);
   expect(actualResultjson.ur).toEqual(expectresultjson.ur);

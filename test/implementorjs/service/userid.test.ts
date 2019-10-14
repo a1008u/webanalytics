@@ -1,4 +1,4 @@
-import { getUid } from "../../../src/implementorjs/service/userid";
+import { getUid } from "../../../src/common/userid";
 import { storeInLocalStorage } from "../../../src/common/localstorage";
 
 describe('getUid', () => {
@@ -14,7 +14,7 @@ describe('getUid', () => {
     });
     test('正常_sessionstorageからの取得', async () => {
         // sesseionに追加
-        storeInLocalStorage("test")
+        storeInLocalStorage("_atuid", "test")
   
         // exe
         const result = await getUid("_atuid")

@@ -1,7 +1,7 @@
 import {
   storeInLocalStorage,
   getLocalStorage
-} from "../../common/localstorage";
+} from "./localstorage";
 import uuidv4 from "uuid/v4";
 import sha1 from "sha1";
 
@@ -22,8 +22,21 @@ async function getUid(uidKey: string): Promise<string> {
   }
   const uidSha1 = sha1(uuidv4());
   // console.log("sha1(uuidv4())から取得 : ", uidSha1);
-  storeInLocalStorage(uidSha1);
+  storeInLocalStorage("_atuid", uidSha1);
   return uidSha1;
 }
 
-export { getUid };
+async function storeUid(uidKey: string): Promise<void> {
+  // localstorageck
+  const atuid: string | null = await getLocalStorage(uidKey);
+  if (atuid) {
+    // console.log("local storageから取得 : ", atuid);
+    return;
+  }
+  const uidSha1 = sha1(uuidv4());
+  // console.log("sha1(uuidv4())から取得 : ", uidSha1);
+  storeInLocalStorage("_atuid", uidSha1);
+  return;
+}
+
+export { getUid, storeUid };

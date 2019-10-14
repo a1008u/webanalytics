@@ -1,0 +1,65 @@
+steps:
+  ###########################################################
+  # Step 1: npm install , test and build
+  ###########################################################
+  - name: 'gcr.io/cloud-builders/npm'
+    id: npm-install
+    args: 
+      - i
+      - -f
+    waitFor: ['-']
+  # - name: 'gcr.io/cloud-builders/npm'
+  #   id: npm-test
+  #   args: ['run','test']
+  #   waitFor: ['npm-install']
+  - name: 'gcr.io/cloud-builders/npm'
+    id: npm_build_staging
+    args: ['run','build_staging']
+    # waitFor: ['npm-test']
+  ###########################################################
+  # Step 2: gcloud copy step
+  ###########################################################
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'cp-dataly.min.js'
+    args: ['cp', 'public/js/dataly/dataly.min.js', 'gs://staging_script.atdataly.jp/script/dataly.min.js']
+    waitFor: ['npm_build_staging']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'cp-atimplementorjs.min.js'
+    args: ['cp', 'public/js/implementorjs/atimplementorjs.min.js', 'gs://staging_script.atdataly.jp/script/atimplementorjs.min.js']
+    waitFor: ['npm_build_staging']
+  ###########################################################
+  # Step 3: gcloud cmod step
+  ###########################################################
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'acl-atimplementorjs.min.js'
+    args: 
+      - acl 
+      - ch 
+      - -u 
+      - AllUsers:R 
+      - gs://staging_script.atdataly.jp/script/atimplementorjs.min.js
+    waitFor: ['cp-dataly.min.js']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'acl-dataly.min.js'
+    args: 
+      - acl 
+      - ch 
+      - -u 
+      - AllUsers:R 
+      - gs://staging_script.atdataly.jp/script/dataly.min.js
+    waitFor: ['cp-atimplementorjs.min.js']
+  ##########################################################
+  # Step 3: gcloud copy step html
+  ##########################################################
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'site1'
+    args: ['cp', 'public/html/staging/site1/*.html', 'gs://staging_script.atdataly.jp/static/site1']
+    waitFor: ['npm_build_staging'] 
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'site2'
+    args: ['cp', 'public/html/staging/site2/*.html', 'gs://staging_script.atdataly.jp/static/site2']
+    waitFor: ['npm_build_staging'] 
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: 'site3'
+    args: ['cp', 'public/html/staging/site3/*.html', 'gs://staging_script.atdataly.jp/static/site3']
+    waitFor: ['npm_build_staging'] 

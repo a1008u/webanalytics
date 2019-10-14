@@ -1,4 +1,4 @@
-import { getQueryTargetKeyValue } from "../../../src/implementorjs/service/query";
+import { getQueryTargetKeyValue } from "../../../src/dataly/service/query";
 
 const domain: string = 'http://localhost:3000?id=test1234';
 const key : string =  "id="

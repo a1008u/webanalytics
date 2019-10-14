@@ -25,6 +25,7 @@ npm install --save es6-promise fetch-polyfill sendbeacon-polyfill
 npm install --save webpack-merge exports-loader imports
 npm install --save ip @types/ip
 npm install --save ip-address @types/ip-address
+npm install --save moment moment-timezone @types/moment-timezone
 ```
 
 ## dockerについて
@@ -95,3 +96,10 @@ npm run build_dev
     (function(d){var s=d.createElement('script');s.src='../../js/implementorjs/atimplementorjs.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
 </script> 
 ```
+
+----------------------------------------------------------
+## test環境
+
+### dev-dataly
+()[https://s.dev.atdataly.jp/static/site1/index_mk.html]
+()[https://s.dev.atdataly.jp/static/site1/index_gtm.html]

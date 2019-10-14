@@ -1,23 +1,18 @@
 import { sl, resultjson, ed } from "../domain/resultjson";
+import * as moment from 'moment';
+import momentz from 'moment-timezone';
 
 // 作業時間を作成
-function mkDateTime(): string {
-  const date = new Date();
-  const dateJST: string =
-    date.getFullYear() +
-    "-" +
-    ("0" + (date.getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + date.getDate()).slice(-2) +
-    " " +
-    ("0" + date.getHours()).slice(-2) +
-    ":" +
-    ("0" + date.getMinutes()).slice(-2) +
-    ":" +
-    ("0" + date.getSeconds()).slice(-2) +
-    "." +
-    ("0" + date.getMilliseconds()).slice(-3);
-  return dateJST;
+// 戻り値 [ゾーン, ゾーンから推測したlocalの時間, UTCの時間, JSTの時間]
+function mkDateTime(): Array<string> {
+  const format: string = 'Y-MM-DD HH:mm:ss.SSS'
+  const dateUtc = moment.utc();
+  const dateGuess = momentz.tz(dateUtc, momentz.tz.guess());
+  const dateJst = momentz.tz(dateUtc, "Asia/Tokyo");
+  const dateFUTC = dateUtc.format(format);
+  const dateFGUESS = dateGuess.format(format);
+  const dateFJST = dateJst.format(format);
+  return [momentz.tz.guess(), dateFGUESS, dateFUTC, dateFJST];
 }
 
 /**
@@ -58,8 +53,8 @@ async function pixelDepth(): Promise<sl> {
  */
 async function closeExec(resultJson: resultjson, h: number): Promise<void> {
   // console.log("イベントタイプ--------------------", event.type);
-  const enddateJst: string = await mkDateTime();
-  const endJson: ed = new ed(enddateJst, h);
+  const [_, enddateLocal, enddateUtc, enddateJst] = await mkDateTime();
+  const endJson: ed = new ed(enddateLocal, enddateUtc, enddateJst, h);
   resultJson.ed = endJson;
   // console.log("endに格納するJSON", endJson, "計測用のJSON最終形態", resultJson);
 

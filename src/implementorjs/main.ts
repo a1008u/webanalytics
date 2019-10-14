@@ -1,11 +1,13 @@
 import { ckCertificattionJson } from "./service/certification";
 import { mkDataly } from "./service/createService";
-import { getUid } from "./service/userid";
-import { changeQuery } from "./service/query";
+import { storeUid } from "../common/userid";
 
 import { CertificationJson, AccessJson } from "./domain/certificateJson";
 import { UseService } from "./domain/useService";
 import { storeSesstionStorage } from "../common/sessionstorage";
+// import { storeIdentifier } from "../common/identifier";
+import { changeQuery } from "../dataly/service/query";
+import { init } from "../dataly/service/init";
 
 /**
  * メイン処理
@@ -28,15 +30,11 @@ async function main(
     // certificationの情報をsessionstorageに保存
     storeSesstionStorage(sessionStorageKey, certificationJson);
 
-    // uuid生成
+    // uuid生成(格納)
     const uidKey = "__atud";
-    const uuid: string = await getUid(uidKey);
+    await storeUid(uidKey);
 
-    // ancher elementのquery書き換え
-    const DELIVERYURL: string = process.env.DELIVERYURL;
-    changeQuery(DELIVERYURL, "atud", uuid);
-
-    // 利用サービス確認と処理を行う
+    // Baseサービス用の処理を行う
     await useService[certificationJson.BL.SE](
       sessionStorageKey,
       certificationJson
@@ -66,3 +64,36 @@ if (__atinfo.Ay && __atinfo.Sd) {
   };
   main(__atinfo, useService);
 }
+
+// 初期化
+// async function main2(){
+//   let h = document.documentElement.scrollHeight; // ドキュメントの高さ
+//   let clienth = document.documentElement.clientHeight; //高さ
+//   let resultJson = await init(h, clienth);
+//   changeQuery(process.env.DELIVERYURL, "atud", resultJson);
+
+
+//   document.addEventListener(
+//     "visibilitychange",
+//     async (): Promise<void> => {
+//       const visibilityState = document.visibilityState;
+//       if (visibilityState === "hidden") {
+//         console.log("イベントタイプ", event.type, resultJson);
+//         // closeExec(resultJson, h);
+//       }
+
+//       if (visibilityState === "visible") {
+//         // console.log("イベントタイプ", event.type);
+//         h = document.documentElement.scrollHeight; // ドキュメントの高さ
+//         clienth = document.documentElement.clientHeight; //高さ
+//         // 識別子の取得
+//         resultJson = await init(h, clienth);
+//         changeQuery(process.env.DELIVERYURL, "atud", resultJson);
+//       }
+//     }
+//   );
+
+// }
+
+
+// main2()

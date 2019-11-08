@@ -11,10 +11,13 @@ const localStorageMock = (function() {
         clear: function() {
             store = {};
         }
-    };
-
+        ,
+        removeItem: function(key) {
+            delete store[key];
+        }
+  };
 })();
 
-Object.defineProperty(window, 'localStorage', {
-     value: localStorageMock
+Object.defineProperty(window, "localStorage", {
+  value: localStorageMock
 });

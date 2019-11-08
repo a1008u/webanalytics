@@ -1,5 +1,5 @@
 import { storeSesstionStorage, getSesstionStorage } from "../../src/common/sessionstorage";
-import { Baseurl, Optionurl, CertificationJson } from "../../src/implementorjs/domain/certificateJson";
+import { Baseurl, Optionurl, CertificationJson } from "../../src/implementor/domain/certificateJson";
 
 describe('sessionStorageの確認', () => {
 
@@ -7,7 +7,7 @@ describe('sessionStorageの確認', () => {
         sessionStorage.clear()
     })
 
-    test('存在', async () => {
+    test('正常_sessionStorageに存在', async () => {
         const bL:Baseurl = new Baseurl("","")
         const oL:Optionurl = new Optionurl("","")
         const oLs:Array<Optionurl> = new Array<Optionurl>(oL)
@@ -16,5 +16,10 @@ describe('sessionStorageの確認', () => {
         storeSesstionStorage("test", expectCertificationJson)
         const actual = await getSesstionStorage("test")
         expect(actual.SD).toEqual("dataly")
+    });
+
+    test('正常_sessionStorageに存在しない', async () => {
+        const actual = await getSesstionStorage("test")
+        expect(actual).toBeNull
     });
 });

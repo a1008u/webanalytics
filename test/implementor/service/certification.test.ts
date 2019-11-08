@@ -1,6 +1,5 @@
-import { Baseurl, Optionurl, CertificationJson, AccessJson } from "../../../src/implementorjs/domain/certificateJson";
-import { ckCertificattionJson } from "../../../src/implementorjs/service/certification";
-    
+import { Baseurl, Optionurl, CertificationJson, AccessJson } from "../../../src/implementor/domain/certificateJson";
+import { ckCertificattionJson } from "../../../src/implementor/service/certification";
 import {GlobalWithFetchMock} from "jest-fetch-mock";
 
 
@@ -12,22 +11,22 @@ describe('getCertificationStatusの動作確認', () => {
     });
 
     test('正常_error時の対応', async () => {
-      // 準備
-      const bL:Baseurl = new Baseurl("dataly","xxx")
-      const oL:Optionurl = new Optionurl("","")
-      const oLs:Array<Optionurl> = new Array<Optionurl>(oL)
-      const expectCertificationJson :CertificationJson = new CertificationJson("dataly",bL,oLs)
-  
-      // exe
-      const accessJson: AccessJson = new AccessJson("","")
-      const result = await ckCertificattionJson("testxxx", accessJson)
+        // 準備
+        const bL:Baseurl = new Baseurl("dataly","xxx")
+        const oL:Optionurl = new Optionurl("","")
+        const oLs:Array<Optionurl> = new Array<Optionurl>(oL)
+        const expectCertificationJson :CertificationJson = new CertificationJson("dataly",bL,oLs)
 
-      // ck
-      expect(result).toEqual(null)
+        // exe
+        const accessJson: AccessJson = new AccessJson("","")
+        const result = await ckCertificattionJson("testxxx", accessJson)
+
+        // ck
+        expect(result).toEqual(null)
     });
-  });
+});
 
-describe('getCertificationStatusの動作確認', () => {
+describe('ckCertificattionJsonのテスト（getCertificationStatusの動作確認）', () => {
 
     const bL:Baseurl = new Baseurl("dataly","xxx")
     const oL:Optionurl = new Optionurl("","")
@@ -42,7 +41,7 @@ describe('getCertificationStatusの動作確認', () => {
 
     test('正常_errorが出ない', async () => {
         // spiの設定
-        const em = require('../../../src/implementorjs/service/certification')
+        const em = require('../../../src/implementor/service/certification')
         const spy = jest.spyOn(em, 'getCertificationStatus').mockReturnValue(null);
 
         // exe

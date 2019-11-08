@@ -1,21 +1,21 @@
 import { mkDateTime, pixelDepth, closeExec} from "../../../src/dataly/service/common";
-import {ur,ck,pr,sl,st,ed,resultjson} from "../../../src/dataly/domain/resultjson";
+import {ur,ck,pr,sl,st,ed,at,resultjson} from "../../../src/dataly/domain/resultjson";
+import { utcToZonedTime, format }  from 'date-fns-tz'
 
 describe('mkDateTimeのテスト', () => {
-  test('正常', async () => {
+  test('正常_正確に時間が取れていることを確認', async () => {
     // test結果の準備
-    const date = new Date();
-    const expectDateJST: string = date.getFullYear()
-    + '-' + ('0' + (date.getMonth() + 1)).slice(-2)
-    + '-' + ('0' + date.getDate()).slice(-2)
-    + ' ' + ('0' + date.getHours()).slice(-2)
-    + ':' + ('0' + date.getMinutes()).slice(-2);
+    const DataAyformat = "Y-MM-dd HH:mm:ss.SSS";
+    const nowDate = new Date()
 
     // exe
     const resultDateJST = mkDateTime()
 
-    // ck
-    expect(resultDateJST).toContain(expectDateJST);
+    // ck(TimeZone, TimeZoneから推測されるローカル時刻, UTCの時刻, 日本時刻)の順で確認
+    expect(resultDateJST[0]).toContain(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    expect(resultDateJST[1]).toContain(format(nowDate, DataAyformat));
+    expect(resultDateJST[2]).toContain(format(utcToZonedTime(nowDate, 'UTC'), DataAyformat));
+    expect(resultDateJST[3]).toContain(format(utcToZonedTime(nowDate, "Asia/Tokyo"), DataAyformat));
   });
 });
 
@@ -46,27 +46,25 @@ describe('pixelDepthのテスト', () => {
 //   });
 // });
 
-// TODO:時間があったら実装
-// describe('closeExecのテスト', () => {
-//   test('正常', async () => {
+describe('closeExecのテスト(sendBeaconが呼ばれた)', () => {
+  test('正常_sendBeaconが実行されたかの確認', async () => {
 
-//     const mockFn = jest.fn().mockName('sendBeacon');
+    // mockの作成
+    const mockFn = jest.fn((t,s) => true);
+    window.navigator.sendBeacon = mockFn;
 
-//     // test結果の準備
-//     const expectuser:user = new user("test1","test2","test3","test4")
-//     const expectpartner:partner = new partner("test5","test6")
-//     const expectstart: start = new start(1,"test7",2,3)
-//     const expectclick :click = new click(5,6)
-//     const expectscroll: scroll = new scroll(7,8,9)
-//     const expectclicks:Array<click> = new Array<click>(expectclick)
-//     const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, expectclicks)
-    
-//     global.navigator.geolocation = mockGeolocation;
+    // test結果の準備
+    const expectuser:ur = new ur("test1", 1,"test3","test4","test1","test2","test3","test4","test5")
+    const expectpartner:pr = new pr("test5","test6")
+    const expectstart: st = new st(1,"test7","test8","test7",2,3)
+    const expectscroll: sl = new sl(7,8,9)
+    const expectAts:Array<at> = new Array<at>()
+    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, expectAts)
 
-//     // exe
-//     await closeExec(expectresultjson, 4)
+    // exe
+    await closeExec(expectresultjson, 4)
 
-//     // ck
-//     expect(mockFn ).toHaveBeenCalled()
-//   });
-// });
+    // ck
+    expect(mockFn).toHaveBeenCalled()
+  });
+});

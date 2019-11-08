@@ -1,4 +1,4 @@
-import { CertificationJson } from "../../src/implementorjs/domain/certificateJson";
+import { CertificationJson } from "../implementor/domain/certificateJson";
 
 /**
  *  sessionstorageからデータを格納する

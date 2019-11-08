@@ -1,22 +1,31 @@
 // output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
-const path = require('path');
-const Dotenv = require('dotenv-webpack');
-const dir = '../../.env/'
-const webpack = require('webpack');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require("path");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Dotenv = require("dotenv-webpack");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const dir = "../../.env/";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const webpack = require("webpack");
 
 module.exports = {
   entry: {
-    ts: ["./src/implementorjs/main.ts"]
+    ts: ["./src/implementor/main.ts"]
   },
   output: {
     // 出力するファイル名
-    filename: "atimplementorjs.min.js",
+    filename: "atimplementor.min.js",
     // 出力先のパス（絶対パスを指定する必要がある）
-    path: path.join(__dirname, "../../public/js/implementorjs/")
+    path: path.join(__dirname, "../../public/js/implementor/")
   },
   resolve: {
     extensions: [".ts", ".js"]
   },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all"
+  //   }
+  // },
   // ファイルの種類がなんであってもwebpackが処理できるモジュールにLoaderが変換してくれることで、
   // webpackがbundleファイルを作れるようになる。
   // testプロパティ：拡張子を指定して、あるLoaderがどのような種類のファイルを処理するべきなのか特定する(正規表現で拡張子を指定)

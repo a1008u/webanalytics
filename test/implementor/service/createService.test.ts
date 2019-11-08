@@ -1,8 +1,8 @@
-import { mkDataly } from "../../../src/implementorjs/service/createService";
-import { Baseurl, Optionurl, CertificationJson } from "../../../src/implementorjs/domain/certificateJson";
+import { mkDataly } from "../../../src/implementor/service/createService";
+import { Baseurl, Optionurl, CertificationJson } from "../../../src/implementor/domain/certificateJson";
 
 describe('dataly作成', () => {
-  test('正常', async () => {
+  test('正常_mkDatalyの動作確認', async () => {
     // 準備
     const bL:Baseurl = new Baseurl("dataly","xxx")
     const oL:Optionurl = new Optionurl("","")

@@ -1,5 +1,12 @@
-(webpackについて)[https://qiita.com/soarflat/items/28bf799f7e0335b68186]
-(uuidについて)[https://www.npmjs.com/package/uuid]
+# DatAly(implementor + DatAly)
+## 役割
+### implementor
+認証キーを確認んして、isToolsに登録されている連携情報をもとに外部連携を行う。
+基本として、必ずDatAlyとは連携を行う。
+このタイミングで、ユーザIDを発行する
+
+### DatAly
+読了率や滞在時間を取得するためのScript
 
 
 ## セットアップについて
@@ -23,9 +30,7 @@ npm install --save jest-localstorage-mock
 npm install --save-dev jest-fetch-mock
 npm install --save es6-promise fetch-polyfill sendbeacon-polyfill
 npm install --save webpack-merge exports-loader imports
-npm install --save ip @types/ip
-npm install --save ip-address @types/ip-address
-npm install --save moment moment-timezone @types/moment-timezone
+npm install date-fns date-fns-tz date-fns-timezone --save
 ```
 
 ## dockerについて
@@ -71,7 +76,7 @@ npm run build_dev
     "Ay":"ここにはaccesskeyが記載されます。",
     "Sd":"ここにサイトIDが記載されます。"
     }
-    (function(d){var s=d.createElement('script');s.src='../../js/implementorjs/atimplementorjs.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
+    (function(d){var s=d.createElement('script');s.src='https://s.dev.atdataly.jp/script/atimplementor.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
 </script> 
 ```
 
@@ -82,7 +87,7 @@ npm run build_dev
     "Ay":"ここにはaccesskeyが記載されます。",
     "Sd":"ここにサイトIDが記載されます。"
     }
-    (function(d){var s=d.createElement('script');s.src='../../js/implementorjs/atimplementorjs.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
+    (function(d){var s=d.createElement('script');s.src='https://s.dev.atdataly.jp/script/atimplementor.min.js';s.async=true;var e=d.getElementsByTagName('script')[0];e.parentNode.insertBefore(s,e);})(document);
 </script> 
 ```
 
@@ -99,7 +104,27 @@ npm run build_dev
 
 ----------------------------------------------------------
 ## test環境
+[site1-1](https://s.dev.atdataly.jp/static/site1/index.html)
+[site1-2](https://s.dev.atdataly.jp/static/site1/index2.html)
+[site1-gtm](https://s.dev.atdataly.jp/static/site1/index_gtm.html)
 
-### dev-dataly
-()[https://s.dev.atdataly.jp/static/site1/index_mk.html]
-()[https://s.dev.atdataly.jp/static/site1/index_gtm.html]
+[site2-1](https://s.dev.atdataly.jp/static/site2/inde.html)
+[site2-2](https://s.dev.atdataly.jp/static/site2/index2.html)
+[site2-gtm](https://s.dev.atdataly.jp/static/site2/index_gtm.html)
+
+[site3-1](https://s.dev.atdataly.jp/static/site3/inde.html)
+[site3-2](https://s.dev.atdataly.jp/static/site3/index2.html)
+[site3-gtm](https://s.dev.atdataly.jp/static/site3/index_gtm.html)
+
+## staging環境
+[site1-1](https://s.staging.atdataly.jp/static/site1/inde.html)
+[site1-2](https://s.staging.atdataly.jp/static/site1/index2.html)
+[site1-gtm](https://s.staging.atdataly.jp/static/site1/index_gtm.html)
+
+[site2-1](https://s.staging.atdataly.jp/static/site2/inde.html)
+[site2-2](https://s.staging.atdataly.jp/static/site2/index2.html)
+[site2-gtm](https://s.staging.atdataly.jp/static/site2/index_gtm.html)
+
+[site3-1](https://s.staging.atdataly.jp/static/site3/inde.html)
+[site3-2](https://s.staging.atdataly.jp/static/site3/index2.html)
+[site3-gtm](https://s.staging.atdataly.jp/static/site3/index_gtm.html)

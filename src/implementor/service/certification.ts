@@ -2,7 +2,7 @@ import { CertificationJson, AccessJson } from "../domain/certificateJson";
 import { getSesstionStorage } from "../../common/sessionstorage";
 
 /**
- * GAEにアクセスして、認証キーを取得する
+ * [GAEにアクセス]認証キーを取得する
  * @param IMPLEMENTORJSACCESSURL
  */
 async function getCertificationStatus(
@@ -48,16 +48,19 @@ async function getCertificationStatus(
 }
 
 /**
- * 認証キーが有効かどうか確認する
+ * [認証キーが有効チェック]
+ * 1.引数のkeyを用いて、sesssionStorageに認証情報があるか確認
+ * 2.Cloud Datastoreからの取得(URLは、envから取得する)
+ * 取得できない場合やエラー時はnull
  * @param key
  * @param __atinfo
- * @returns Promise<CertificationJson>
+ * @returns Promise<CertificationJson> or Promise<null>
  */
 async function ckCertificattionJson(
   key: string,
   __atinfo: AccessJson
 ): Promise<CertificationJson> {
-  // sesssionStorageに認証情報があるか確認
+  // 引数のkeyを用いて、sesssionStorageに認証情報があるか確認
   const certificationJsonSesstion: CertificationJson = await getSesstionStorage(
     key
   );
@@ -66,7 +69,7 @@ async function ckCertificattionJson(
     return certificationJsonSesstion;
   }
 
-  // Cloud Datastoreからの取得(飛び先は、envから取得する)
+  // 2.Cloud Datastoreからの取得(URLは、envから取得する)
   // console.log(process.env.IMPLEMENTORJSACCESSURL);
   const IMPLEMENTORJSACCESSURL: string = process.env.IMPLEMENTORJSACCESSURL;
   try {

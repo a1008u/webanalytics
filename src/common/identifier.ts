@@ -1,9 +1,4 @@
-
-import {
-  storeInLocalStorage,
-  getLocalStorage,
-  removeLocalStorage
-} from "./localstorage";
+import { getLocalStorage, removeLocalStorage } from "./localstorage";
 
 /**
  * atuidとは別に付ける識別子(Identifier)
@@ -17,15 +12,13 @@ async function getIdentifier(IdentifierKey: string): Promise<number> {
     await removeLocalStorage(IdentifierKey);
 
     // varifyの値はjsの最大値9007199254740992までとする
-    return Number(datalyIdentifier) + 1 < 9007199254740993 ? Number(datalyIdentifier) : 0
+    return Number(datalyIdentifier) + 1 < 9007199254740993
+      ? Number(datalyIdentifier)
+      : 0;
   }
 
   // 初回
-  return 0
+  return 0;
 }
-
-// async function getIdentifier(IdentifierKey: string): Promise<string> {
-
-// }
 
 export { getIdentifier };

@@ -10,20 +10,11 @@ class Resultjson {
   // end情報（ページ離脱時のjs取得情報）
   public ed: ED;
   // at情報
-  public at: Array<AT>;
+  public at: AT[];
   // click情報
   // public ck: Array<ck>
 
-  // public constructor(ur: ur, pr:pr, sl: sl, st: st, ed: ed, ck: Array<ck>){
-  //   this.ur = ur
-  //   this.pr = pr
-  //   this.sl = sl
-  //   this.st = st
-  //   this.ed = ed
-  //   this.ck = ck
-  // }
-
-  public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED, at:Array<AT>) {
+  public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED, at: AT[]) {
     this.ur = ur;
     this.pr = pr;
     this.sl = sl;
@@ -69,7 +60,17 @@ class UR {
   public ac: string;
   // クリックしたimg
   public ar: string;
-  public constructor(id: string, ir: number, rr: string, url: string, ua: string, ip :string, zn :string, ac :string, ar :string,) {
+  public constructor(
+    id: string,
+    ir: number,
+    rr: string,
+    url: string,
+    ua: string,
+    ip: string,
+    zn: string,
+    ac: string,
+    ar: string
+  ) {
     this.id = id;
     this.ir = ir;
     this.rr = rr;
@@ -129,7 +130,14 @@ class ST {
   public dt: number;
   // slTop情報
   public sp: number;
-  public constructor(ct: number, dl: string, dc: string,  dj: string, dt: number, sp: number) {
+  public constructor(
+    ct: number,
+    dl: string,
+    dc: string,
+    dj: string,
+    dt: number,
+    sp: number
+  ) {
     this.ct = ct;
     this.dl = dl;
     this.dc = dc;
@@ -168,11 +176,11 @@ class AT {
   public ot: number;
   // clientHeight情報
   public ct: number;
-  public constructor(cc: string, rr: string, ot: number, ct:number) {
-    this.cc = cc
-    this.rr = rr
-    this.ot = ot
-    this.ct = ct
+  public constructor(cc: string, rr: string, ot: number, ct: number) {
+    this.cc = cc;
+    this.rr = rr;
+    this.ot = ot;
+    this.ct = ct;
   }
 }
 

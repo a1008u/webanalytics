@@ -1,18 +1,29 @@
 import { sl, resultjson, ed } from "../domain/resultjson";
-import * as moment from 'moment';
-import momentz from 'moment-timezone';
+import { utcToZonedTime, format }  from 'date-fns-tz'
 
 // 作業時間を作成
 // 戻り値 [ゾーン, ゾーンから推測したlocalの時間, UTCの時間, JSTの時間]
-function mkDateTime(): Array<string> {
-  const format: string = 'Y-MM-DD HH:mm:ss.SSS'
-  const dateUtc = moment.utc();
-  const dateGuess = momentz.tz(dateUtc, momentz.tz.guess());
-  const dateJst = momentz.tz(dateUtc, "Asia/Tokyo");
-  const dateFUTC = dateUtc.format(format);
-  const dateFGUESS = dateGuess.format(format);
-  const dateFJST = dateJst.format(format);
-  return [momentz.tz.guess(), dateFGUESS, dateFUTC, dateFJST];
+function mkDateTime(): string[] {
+
+  const DataAyformat = "Y-MM-dd HH:mm:ss.SSS";
+  const nowDate = new Date()
+
+  // timeZone
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone ? Intl.DateTimeFormat().resolvedOptions().timeZone : null
+
+  // local
+  const dateFLOCAL = format(nowDate, DataAyformat)
+
+  // UTC
+  const utcDate = utcToZonedTime(nowDate, 'UTC')
+  const dateFUTC = format(utcDate, DataAyformat)
+
+  // 日本時間
+  const timeZones = "Asia/Tokyo"
+  const zonedDate = utcToZonedTime(nowDate, timeZones)
+  const dateFJST = format(zonedDate, DataAyformat)
+
+  return [timeZone, dateFLOCAL, dateFUTC, dateFJST];
 }
 
 /**

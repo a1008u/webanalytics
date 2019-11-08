@@ -10,16 +10,16 @@ async function getLocalStorage(key: string): Promise<string | null> {
 
 /**
  * localstorageに値 + localstorageの有効期限を格納する
- * @param key 
- * @param value 
+ * @param key
+ * @param value
  */
-function storeInLocalStorage(key: string ,value: string): void {
+function storeInLocalStorage(key: string, value: string): void {
   localStorage.setItem(key, value);
 }
 
 /**
  * localStoregeの指定したkeyの削除
- * @param key 
+ * @param key
  */
 async function removeLocalStorage(key: string): Promise<void> {
   localStorage.removeItem(key);

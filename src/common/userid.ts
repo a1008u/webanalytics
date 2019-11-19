@@ -25,7 +25,7 @@ async function getUid(uidKey: string): Promise<string> {
  * Uid(user ID)の格納
  * 1.localstorageから取得できたら格納しない
  * 2.新規で発行した場合は、格納
- * @param uidKey 
+ * @param uidKey
  */
 async function storeUid(uidKey: string): Promise<void> {
   // 1.localstorageから取得できたら格納しない

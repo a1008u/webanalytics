@@ -38,7 +38,12 @@ async function screenTransition(
     clienth = document.documentElement.clientHeight; //高さ
     // 識別子の取得
     resultJson = await init(h, clienth);
-    changeAnchorQuery(process.env.IDENTIFIERKEY, process.env.DELIVERYURL, process.env.QUERYKEY, resultJson);
+    changeAnchorQuery(
+      process.env.IDENTIFIERKEY,
+      process.env.DELIVERYURL,
+      process.env.QUERYKEY,
+      resultJson
+    );
   }
   return { resultJson, h, clienth };
 }
@@ -57,7 +62,12 @@ async function main(): Promise<void> {
 
   // 初期化 + atクエリ処理
   resultJson = await init(h, clienth);
-  await changeAnchorQuery(process.env.IDENTIFIERKEY, process.env.DELIVERYURL, process.env.QUERYKEY, resultJson);
+  changeAnchorQuery(
+    process.env.IDENTIFIERKEY,
+    process.env.DELIVERYURL,
+    process.env.QUERYKEY,
+    resultJson
+  );
 
   // scrollの処理
   document.addEventListener(

@@ -38,7 +38,6 @@ async function saveAndMkTag(
   // });
 }
 
-
 /**
  * メイン処理
  * @param __atinfo

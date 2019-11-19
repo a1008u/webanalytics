@@ -4,8 +4,8 @@ import { getLocalStorage } from "../../common/localstorage";
 
 /**
  * [初期化]resultjsonに初期で登録しなければいけない情報を追加
- * @param h 
- * @param clienth 
+ * @param h
+ * @param clienth
  */
 async function init(h: number, clienth: number): Promise<resultjson> {
   // js起動時間とゾーンをローカルを基準として取得
@@ -59,7 +59,6 @@ async function init(h: number, clienth: number): Promise<resultjson> {
     partnerJson,
     scrolljson,
     startjson,
-    null,
     null
   );
 }

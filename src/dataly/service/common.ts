@@ -1,51 +1,41 @@
 import { sl, resultjson, ed } from "../domain/resultjson";
-import { utcToZonedTime, format }  from 'date-fns-tz'
+import { utcToZonedTime, format } from "date-fns-tz";
 
 // 作業時間を作成
 // 戻り値 [ゾーン, ゾーンから推測したlocalの時間, UTCの時間, JSTの時間]
 function mkDateTime(): string[] {
-
   const DataAyformat = "Y-MM-dd HH:mm:ss.SSS";
-  const nowDate = new Date()
+  const nowDate = new Date();
 
   // timeZone
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone ? Intl.DateTimeFormat().resolvedOptions().timeZone : null
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    ? Intl.DateTimeFormat().resolvedOptions().timeZone
+    : null;
 
   // local
-  const dateFLOCAL = format(nowDate, DataAyformat)
+  const dateFLOCAL = format(nowDate, DataAyformat);
 
   // UTC
-  const utcDate = utcToZonedTime(nowDate, 'UTC')
-  const dateFUTC = format(utcDate, DataAyformat)
+  const utcDate = utcToZonedTime(nowDate, "UTC");
+  const dateFUTC = format(utcDate, DataAyformat);
 
   // 日本時間
-  const timeZones = "Asia/Tokyo"
-  const zonedDate = utcToZonedTime(nowDate, timeZones)
-  const dateFJST = format(zonedDate, DataAyformat)
+  const timeZones = "Asia/Tokyo";
+  const zonedDate = utcToZonedTime(nowDate, timeZones);
+  const dateFJST = format(zonedDate, DataAyformat);
 
   return [timeZone, dateFLOCAL, dateFUTC, dateFJST];
 }
 
 /**
- * スクロール時の処理
- *
- *  // console.log('サーバに送信しないよ')
-    // console.log("--------------------")
-    // console.log(
-    // `スクロールした回数:${scrollCount}`
-    // ,`読了率:${Math.round(((scrollTop+Number(clienth))/h)*100)}%`
-    // , `${startmessage}:${scrolldateJst}`
-    // , `トップからのスクロール位置:${scrollTop}`
-    // , `ドキュメントの全体の高さ${h}`
-    // , `画面表示の高さ${clienth}`
-    // , `見えていない高さ${Number(h)-Number(clienth)}`)
+ * スクロール時の処理（小数点は全て切り捨て）
  * @return {void}
  */
 async function pixelDepth(): Promise<sl> {
   const scrollJson: sl = new sl(
-    document.documentElement.clientHeight,
-    document.documentElement.scrollHeight,
-    document.documentElement.scrollTop
+    Math.floor(document.documentElement.clientHeight),
+    Math.floor(document.documentElement.scrollHeight),
+    Math.floor(document.documentElement.scrollTop)
   );
   return scrollJson;
 }

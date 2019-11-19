@@ -30,7 +30,7 @@ npm install --save jest-localstorage-mock
 npm install --save-dev jest-fetch-mock
 npm install --save es6-promise fetch-polyfill sendbeacon-polyfill
 npm install --save webpack-merge exports-loader imports
-npm install date-fns date-fns-tz date-fns-timezone --save
+npm install --save date-fns date-fns-tz date-fns-timezone
 ```
 
 ## dockerについて
@@ -104,27 +104,27 @@ npm run build_dev
 
 ----------------------------------------------------------
 ## test環境
-[site1-1](https://s.dev.atdataly.jp/static/site1/index.html)
-[site1-2](https://s.dev.atdataly.jp/static/site1/index2.html)
-[site1-gtm](https://s.dev.atdataly.jp/static/site1/index_gtm.html)
+[site1-1](https://s.dev.atdataly.jp/static/site1/index.html)  
+[site1-2](https://s.dev.atdataly.jp/static/site1/index2.html)  
+[site1-gtm](https://s.dev.atdataly.jp/static/site1/index_gtm.html)  
 
-[site2-1](https://s.dev.atdataly.jp/static/site2/inde.html)
-[site2-2](https://s.dev.atdataly.jp/static/site2/index2.html)
-[site2-gtm](https://s.dev.atdataly.jp/static/site2/index_gtm.html)
+[site2-1](https://s.dev.atdataly.jp/static/site2/inde.html)  
+[site2-2](https://s.dev.atdataly.jp/static/site2/index2.html)  
+[site2-gtm](https://s.dev.atdataly.jp/static/site2/index_gtm.html)  
 
-[site3-1](https://s.dev.atdataly.jp/static/site3/inde.html)
-[site3-2](https://s.dev.atdataly.jp/static/site3/index2.html)
-[site3-gtm](https://s.dev.atdataly.jp/static/site3/index_gtm.html)
+[site3-1](https://s.dev.atdataly.jp/static/site3/inde.html)  
+[site3-2](https://s.dev.atdataly.jp/static/site3/index2.html)  
+[site3-gtm](https://s.dev.atdataly.jp/static/site3/index_gtm.html)  
 
 ## staging環境
-[site1-1](https://s.staging.atdataly.jp/static/site1/inde.html)
-[site1-2](https://s.staging.atdataly.jp/static/site1/index2.html)
-[site1-gtm](https://s.staging.atdataly.jp/static/site1/index_gtm.html)
+[site1-1](https://s.staging.atdataly.jp/static/site1/inde.html)  
+[site1-2](https://s.staging.atdataly.jp/static/site1/index2.html)  
+[site1-gtm](https://s.staging.atdataly.jp/static/site1/index_gtm.html)  
 
-[site2-1](https://s.staging.atdataly.jp/static/site2/inde.html)
-[site2-2](https://s.staging.atdataly.jp/static/site2/index2.html)
-[site2-gtm](https://s.staging.atdataly.jp/static/site2/index_gtm.html)
+[site2-1](https://s.staging.atdataly.jp/static/site2/inde.html)  
+[site2-2](https://s.staging.atdataly.jp/static/site2/index2.html)  
+[site2-gtm](https://s.staging.atdataly.jp/static/site2/index_gtm.html)  
 
-[site3-1](https://s.staging.atdataly.jp/static/site3/inde.html)
-[site3-2](https://s.staging.atdataly.jp/static/site3/index2.html)
-[site3-gtm](https://s.staging.atdataly.jp/static/site3/index_gtm.html)
+[site3-1](https://s.staging.atdataly.jp/static/site3/inde.html)  
+[site3-2](https://s.staging.atdataly.jp/static/site3/index2.html)  
+[site3-gtm](https://s.staging.atdataly.jp/static/site3/index_gtm.html)  

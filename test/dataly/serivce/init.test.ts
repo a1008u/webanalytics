@@ -22,7 +22,7 @@ test('正常', async () => {
   const expectpartner:pr = new pr("test","")
   const expectstart: st = new st(expectclienth,'','',"test7",expecth,0)
   const expectscroll: sl = new sl(0,0,0)
-  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null,null)
+  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
   const date = new Date();
   const expectDateJST: string = date.getFullYear()
   + '-' + ('0' + (date.getMonth() + 1)).slice(-2)

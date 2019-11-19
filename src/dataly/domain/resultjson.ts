@@ -10,18 +10,26 @@ class Resultjson {
   // end情報（ページ離脱時のjs取得情報）
   public ed: ED;
   // at情報
-  public at: AT[];
+  // public at: AT[];
   // click情報
   // public ck: Array<ck>
 
-  public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED, at: AT[]) {
+  public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED) {
     this.ur = ur;
     this.pr = pr;
     this.sl = sl;
     this.st = st;
     this.ed = ed;
-    this.at = at;
   }
+
+  // public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED, at: AT[]) {
+  //   this.ur = ur;
+  //   this.pr = pr;
+  //   this.sl = sl;
+  //   this.st = st;
+  //   this.ed = ed;
+  //   this.at = at;
+  // }
 }
 
 /**

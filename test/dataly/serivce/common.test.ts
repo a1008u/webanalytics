@@ -58,8 +58,8 @@ describe('closeExecのテスト(sendBeaconが呼ばれた)', () => {
     const expectpartner:pr = new pr("test5","test6")
     const expectstart: st = new st(1,"test7","test8","test7",2,3)
     const expectscroll: sl = new sl(7,8,9)
-    const expectAts:Array<at> = new Array<at>()
-    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, expectAts)
+    // const expectAts:Array<at> = new Array<at>()
+    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
 
     // exe
     await closeExec(expectresultjson, 4)

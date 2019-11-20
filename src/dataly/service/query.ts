@@ -74,14 +74,14 @@ async function changeAnchorQuery(
     identifier: number
   ): Promise<string> {
     const atudIdentifierQuery = `${queryKey}=${resultJson.ur.id}-${identifier}`;
-    
+
     // datalyパラメータ「?atud=datalyUserid-識別子」が存在する箇所の入れ替え
     if (targetAtagHref.search(/([?])atud=.*-[0-9]{1,16}/g) != -1) {
       return targetAtagHref.replace(
         /([?])atud=.*-[0-9]{1,16}/g,
         `?${atudIdentifierQuery}`
       );
-    } 
+    }
 
     //  datalyパラメータ「&atud=datalyUserid-識別子」が存在する箇所の入れ替え
     if (targetAtagHref.search(/([&])atud=.*-[0-9]{1,16}/g) != -1) {
@@ -89,23 +89,17 @@ async function changeAnchorQuery(
         /([&])atud=.*-[0-9]{1,16}/g,
         `&${atudIdentifierQuery}`
       );
-    } 
+    }
 
     // 非公開機能用：datalyパラメータ「?atud=」が存在する箇所の入れ替え
     if (targetAtagHref.search(/([?])atud=/g) != -1) {
-      return targetAtagHref.replace(
-        /([?])atud=/g,
-        `?${atudIdentifierQuery}`
-      );
-    } 
+      return targetAtagHref.replace(/([?])atud=/g, `?${atudIdentifierQuery}`);
+    }
 
     // 非公開機能用：datalyパラメータ「&atud=」が存在する箇所の入れ替え
     if (targetAtagHref.search(/([&])atud=/g) != -1) {
-      return targetAtagHref.replace(
-        /([&])atud=/g,
-        `&${atudIdentifierQuery}`
-      );
-    } 
+      return targetAtagHref.replace(/([&])atud=/g, `&${atudIdentifierQuery}`);
+    }
 
     // targetkey（atのドメイン）に対し、hashがある場合は、hashを最後にしてパラメータ付与
     if (targetAtagHref.indexOf("#") !== -1) {
@@ -117,8 +111,8 @@ async function changeAnchorQuery(
 
     // hashがないため、urlの後ろにパラメータ付与
     return targetAtagHref.indexOf("?") === -1
-    ? `${targetAtagHref}?${atudIdentifierQuery}`
-    : `${targetAtagHref}&${atudIdentifierQuery}`;
+      ? `${targetAtagHref}?${atudIdentifierQuery}`
+      : `${targetAtagHref}&${atudIdentifierQuery}`;
   }
 
   resultJsonGrobal = resultJson;
@@ -132,9 +126,10 @@ async function changeAnchorQuery(
     const aTag = document.getElementsByTagName("a")[_i];
     const targetAtagHref = aTag.getAttribute("href");
     if (
-      targetAtagHref.includes(targetkey) ||
-      targetAtagHref.includes(`&${process.env.QUERYKEY}=`) ||
-      targetAtagHref.includes(`?${process.env.QUERYKEY}=`)
+      targetAtagHref &&
+      (targetAtagHref.includes(targetkey) ||
+        targetAtagHref.includes(`&${process.env.QUERYKEY}=`) ||
+        targetAtagHref.includes(`?${process.env.QUERYKEY}=`))
     ) {
       // アクトレのタグにdatalyのパラメータを設定
       aTag.href = await getAndChangeAtag(targetAtagHref, ++identifier);
@@ -142,30 +137,6 @@ async function changeAnchorQuery(
       continue;
     }
   }
-
-  // targetAtagsにtargetKeyが含まれているため、そこから子要素にIMGが存在する場合、
-  // atのrrとccを全て取得し、DatAlyのjsonに保持
-  // targetAtags.forEach((aTag: HTMLAnchorElement): void => {
-  //   aTag.childNodes.forEach((e: ChildNode): void => {
-  //     if ("IMG" === e.nodeName) {
-  //       // console.log(aTag.offsetTop, aTag.clientHeight, aTag.offsetTop+aTag.clientHeight)
-  //       // console.log(document.documentElement.clientHeight, document.documentElement.scrollTop, document.documentElement.clientHeight+document.documentElement.scrollTop)
-  //       // console.log(aTag.offsetTop+aTag.clientHeight < document.documentElement.clientHeight+document.documentElement.scrollTop)
-  //       if (!resultJson.at) {
-  //         resultJson.at = new Array<at>();
-  //       }
-  //       const imageTag: HTMLImageElement = aTag.children[0] as HTMLImageElement;
-  //       resultJson.at.push(
-  //         new at(
-  //           aTag.href,
-  //           imageTag.src,
-  //           imageTag.offsetTop,
-  //           imageTag.clientHeight
-  //         )
-  //       );
-  //     }
-  //   });
-  // });
 
   // atクリック用のイベント追加
   // clickイベントを複数つけないためにremoveを追加

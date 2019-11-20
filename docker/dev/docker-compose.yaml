@@ -10,5 +10,4 @@ services:
       - ../../:/app
     command: sh -c "
       npm i -f &&
-      npm run test &&
       npm run build_local_dev"

@@ -43,7 +43,7 @@ async function init(h: number, clienth: number): Promise<resultjson> {
   const scrolljson: sl = await pixelDepth();
 
   // startJson初期化
-  const scrollTop: number = document.documentElement.scrollTop;
+  const scrollTop: number = Math.floor(document.documentElement.scrollTop);
   const startjson: st = new st(
     clienth,
     startdateLocal,
@@ -54,13 +54,7 @@ async function init(h: number, clienth: number): Promise<resultjson> {
   );
 
   // 終了以外の情報でオブジェクト生成
-  return new resultjson(
-    userJson,
-    partnerJson,
-    scrolljson,
-    startjson,
-    null
-  );
+  return new resultjson(userJson, partnerJson, scrolljson, startjson, null);
 }
 
 export { init };

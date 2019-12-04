@@ -34,8 +34,8 @@ async function screenTransition(
 
   if (visibilityState === "visible") {
     // console.log("イベントタイプ", event.type);
-    h = document.documentElement.scrollHeight; // ドキュメントの高さ
-    clienth = document.documentElement.clientHeight; //高さ
+    h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
+    clienth = Math.floor(document.documentElement.clientHeight); //高さ
     // 識別子の取得
     resultJson = await init(h, clienth);
     changeAnchorQuery(
@@ -57,8 +57,8 @@ async function main(): Promise<void> {
   let resultJson: resultjson;
 
   // 計測用のJSON最終形態(user, start、end、scroll)
-  h = document.documentElement.scrollHeight; // ドキュメントの高さ
-  clienth = document.documentElement.clientHeight; //高さ
+  h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
+  clienth = Math.floor(document.documentElement.clientHeight); //高さ
 
   // 初期化 + atクエリ処理
   resultJson = await init(h, clienth);

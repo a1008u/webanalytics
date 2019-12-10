@@ -44,6 +44,7 @@ async function screenTransition(
       process.env.QUERYKEY,
       resultJson
     );
+    closeExec(resultJson, 4);
   }
   return { resultJson, h, clienth };
 }
@@ -68,6 +69,9 @@ async function main(): Promise<void> {
     process.env.QUERYKEY,
     resultJson
   );
+
+  // 起動時にbeaconを送る
+  closeExec(resultJson, 3);
 
   // scrollの処理
   document.addEventListener(

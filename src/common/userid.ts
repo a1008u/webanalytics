@@ -16,7 +16,7 @@ async function getUid(uidKey: string): Promise<string> {
     return atuid;
   }
   // 2.uuidv4を利用して、生成
-  const uidSha1 = sha1(uuidv4());
+  const uidSha1 = await mkUid();
   storeInLocalStorage(uidKey, uidSha1);
   return uidSha1;
 }
@@ -34,9 +34,15 @@ async function storeUid(uidKey: string): Promise<void> {
     return;
   }
   // 2.新規で発行した場合は、格納
-  const uidSha1 = sha1(uuidv4());
-  storeInLocalStorage(uidKey, uidSha1);
+  storeInLocalStorage(uidKey, await mkUid());
   return;
 }
 
-export { getUid, storeUid };
+/**
+ * Uid(user ID)を新規で発行
+ */
+async function mkUid(): Promise<string> {
+  return sha1(uuidv4());
+}
+
+export { getUid, storeUid, mkUid };

@@ -1,5 +1,5 @@
 import { mkDateTime, pixelDepth, closeExec} from "../../../src/dataly/service/common";
-import {ur,ck,pr,sl,st,ed,at,resultjson} from "../../../src/dataly/domain/resultjson";
+import {ur,ck,pr,sl,st,ed,resultjson, sd} from "../../../src/dataly/domain/resultjson";
 import { utcToZonedTime, format }  from 'date-fns-tz'
 
 describe('mkDateTimeのテスト', () => {
@@ -33,19 +33,6 @@ describe('pixelDepthのテスト', () => {
   });
 });
 
-// describe('clickDepthのテスト', () => {
-//   test('正常', async () => {
-//     // test結果の準備
-
-//     // exe
-//     const actualClick = await clickDepth(MouseEvent)
-
-//     // ck
-//     const expectclick :click = new click(1,2)
-//     expect(actualClick).toEqual(expectclick);
-//   });
-// });
-
 describe('closeExecのテスト(sendBeaconが呼ばれた)', () => {
   test('正常_sendBeaconが実行されたかの確認', async () => {
 
@@ -54,15 +41,16 @@ describe('closeExecのテスト(sendBeaconが呼ばれた)', () => {
     window.navigator.sendBeacon = mockFn;
 
     // test結果の準備
-    const expectuser:ur = new ur("test1", 1,"test3","test4","test1","test2","test3","test4","test5")
+    const expectuser:ur = new ur("test1","test11", 1,"test3","test4","test1","test2","test3","test4","test5")
     const expectpartner:pr = new pr("test5","test6")
     const expectstart: st = new st(1,"test7","test8","test7",2,3)
     const expectscroll: sl = new sl(7,8,9)
-    // const expectAts:Array<at> = new Array<at>()
-    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
+    const expectsendData:sd = new sd("") 
+    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, expectsendData)
 
     // exe
-    await closeExec(expectresultjson, 4)
+    await closeExec(expectresultjson, 4,'impression')
+    await closeExec(expectresultjson, 3,'click')
 
     // ck
     expect(mockFn).toHaveBeenCalled()

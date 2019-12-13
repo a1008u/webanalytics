@@ -9,27 +9,17 @@ class Resultjson {
   public st: ST;
   // end情報（ページ離脱時のjs取得情報）
   public ed: ED;
-  // at情報
-  // public at: AT[];
-  // click情報
-  // public ck: Array<ck>
+  // DatAlySend情報
+  public sd:SD;
 
-  public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED) {
+  public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED, sd:SD) {
     this.ur = ur;
     this.pr = pr;
     this.sl = sl;
     this.st = st;
     this.ed = ed;
+    this.sd = sd;
   }
-
-  // public constructor(ur: UR, pr: PR, sl: SL, st: ST, ed: ED, at: AT[]) {
-  //   this.ur = ur;
-  //   this.pr = pr;
-  //   this.sl = sl;
-  //   this.st = st;
-  //   this.ed = ed;
-  //   this.at = at;
-  // }
 }
 
 /**
@@ -50,10 +40,12 @@ class PR {
  * user情報用のクラス
  */
 class UR {
-  // id情報
-  public id: string;
-  // identifier情報（識別子）
-  public ir: number;
+  // id情報（アトリビューション分析用）
+  public ad: string;
+  // id情報（CV用）
+  public cd: string;
+  // サイト内に存在するアクトレ広告またはatudの番号
+  public ao: number;
   // referrer情報
   public rr: string;
   // useragent情報
@@ -69,8 +61,9 @@ class UR {
   // クリックしたimg
   public ar: string;
   public constructor(
-    id: string,
-    ir: number,
+    ad: string,
+    cd: string,
+    ao: number,
     rr: string,
     url: string,
     ua: string,
@@ -79,8 +72,9 @@ class UR {
     ac: string,
     ar: string
   ) {
-    this.id = id;
-    this.ir = ir;
+    this.ad = ad;
+    this.cd = cd;
+    this.ao = ao;
     this.rr = rr;
     this.url = url;
     this.ua = ua;
@@ -175,20 +169,12 @@ class ED {
   }
 }
 
-class AT {
-  // click用
-  public cc: string;
-  // imp用
-  public rr: string;
-  // offsetTop情報
-  public ot: number;
-  // clientHeight情報
-  public ct: number;
-  public constructor(cc: string, rr: string, ot: number, ct: number) {
-    this.cc = cc;
-    this.rr = rr;
-    this.ot = ot;
-    this.ct = ct;
+// send data情報
+class SD {
+  // send trigger情報(impression, click)
+  public tr: string;
+  public constructor(tr:string){
+    this.tr = tr;
   }
 }
 
@@ -200,5 +186,5 @@ export {
   CK as ck,
   ST as st,
   ED as ed,
-  AT as at
+  SD as sd
 };

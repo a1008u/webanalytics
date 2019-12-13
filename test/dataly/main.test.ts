@@ -1,4 +1,4 @@
-import {ur,pr,sl,st,at,resultjson} from "../../src/dataly/domain/resultjson";
+import {ur,pr,sl,st,resultjson} from "../../src/dataly/domain/resultjson";
 import { scrollCkForReadrate, screenTransition } from "../../src/dataly/main";
 import { storeInLocalStorage} from "../../src/common/localstorage";
 
@@ -41,12 +41,12 @@ test('scrollCkForReadrateのテスト正常', async () => {
   // expectの準備
   const expecth:number = 1000
   const expectclienth:number = 100
-  const expectuser:ur = new ur("test", 0,"","http://localhost:8080/test.html", window.navigator.userAgent, null, Intl.DateTimeFormat().resolvedOptions().timeZone, null, null)
+  const expectuser:ur = new ur("test", "test", 0,"","http://localhost:8080/test.html", window.navigator.userAgent, null, Intl.DateTimeFormat().resolvedOptions().timeZone, null, null)
   const expectpartner:pr = new pr("test","")
   const expectstart: st = new st(expectclienth,'','',"test7",expecth,0)
   const expectSl = new sl(0,0,0)
   const expectscroll: sl = new sl(212,44343,-10)
-  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
+  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, null)
   const date = new Date();
   const expectDateJST: string = date.getFullYear()
   + '-' + ('0' + (date.getMonth() + 1)).slice(-2)
@@ -64,11 +64,11 @@ test('scrollCkForReadrateのテスト正常', async () => {
     // expectの準備
     const expecth:number = 1000
     const expectclienth:number = 100
-    const expectuser:ur = new ur("test", 0,"","http://localhost:8080/test.html", window.navigator.userAgent, null, Intl.DateTimeFormat().resolvedOptions().timeZone, null, null)
+    const expectuser:ur = new ur("test","test", 0,"","http://localhost:8080/test.html", window.navigator.userAgent, null, Intl.DateTimeFormat().resolvedOptions().timeZone, null, null)
     const expectpartner:pr = new pr("test","")
     const expectstart: st = new st(expectclienth,'','',"test7",expecth,0)
     const expectscroll: sl = new sl(212,44343,-10)
-    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
+    const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, null)
     const date = new Date();
     const expectDateJST: string = date.getFullYear()
     + '-' + ('0' + (date.getMonth() + 1)).slice(-2)
@@ -77,10 +77,8 @@ test('scrollCkForReadrateのテスト正常', async () => {
     + ':' + ('0' + date.getMinutes()).slice(-2);
   
     // exe(初期化されていることを確認)
-    const {resultJson, h, clienth} = await screenTransition(expectresultjson, 100, 100);
+    const resultJson = await screenTransition(expectresultjson);
     expect(expectresultjson).not.toEqual(resultJson);
-    expect(h).toEqual(0);
-    expect(clienth).toEqual(0);
     });
 });
 

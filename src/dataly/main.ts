@@ -7,11 +7,12 @@ import { changeAnchorQuery } from "./service/query";
  * 読了率チェック用にスクロール量を取得（scrollは常に一番深くスクロールした情報を取得する）
  * @param resultJson
  */
-async function scrollCkForReadrate(resultJson: resultjson): Promise<void> {
+async function scrollCkForReadrate(resultJson: resultjson): Promise<resultjson> {
   const scrollJson: sl = await pixelDepth();
   if (resultJson.sl.sp < scrollJson.sp) {
     resultJson.sl = scrollJson;
   }
+  return resultJson;
 }
 
 /**
@@ -22,31 +23,26 @@ async function scrollCkForReadrate(resultJson: resultjson): Promise<void> {
  */
 async function screenTransition(
   resultJson: resultjson,
-  h: number,
-  clienth: number
-): Promise<{ resultJson: resultjson; h: number; clienth: number }> {
+): Promise<resultjson> {
   const visibilityState = document.visibilityState;
   if (visibilityState === "hidden") {
     // console.log("イベントタイプ", event.type);
-    closeExec(resultJson, h);
-    return { resultJson, h, clienth };
+    const h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
+    await closeExec(resultJson, h, 'impression');
+    return resultJson;
   }
 
   if (visibilityState === "visible") {
     // console.log("イベントタイプ", event.type);
-    h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
-    clienth = Math.floor(document.documentElement.clientHeight); //高さ
     // 識別子の取得
-    resultJson = await init(h, clienth);
+    resultJson = await init();
     changeAnchorQuery(
-      process.env.IDENTIFIERKEY,
       process.env.DELIVERYURL,
       process.env.QUERYKEY,
       resultJson
     );
-    closeExec(resultJson, 4);
   }
-  return { resultJson, h, clienth };
+  return resultJson;
 }
 
 /**
@@ -54,50 +50,52 @@ async function screenTransition(
  */
 async function main(): Promise<void> {
   // 再利用変数（画面遷移時とタブがvisibleの時に代入されます。）
-  let h: number, clienth: number;
   let resultJson: resultjson;
+  let sendIntervalToDatalyTotal: number = 0 ;
 
-  // 計測用のJSON最終形態(user, start、end、scroll)
-  h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
-  clienth = Math.floor(document.documentElement.clientHeight); //高さ
+  const sendIntervalToDataly: number = 10000
 
   // 初期化 + atクエリ処理
-  resultJson = await init(h, clienth);
+  resultJson = await init();
   changeAnchorQuery(
-    process.env.IDENTIFIERKEY,
     process.env.DELIVERYURL,
     process.env.QUERYKEY,
     resultJson
   );
 
-  // 起動時にbeaconを送る
-  closeExec(resultJson, 3);
+  // 10分間の間10秒に一回起動して、画面がvisible状態の時にdatalyの情報をサーバに送る
+  setInterval(() => {
+    if ('visible' === document.visibilityState && 600000 > sendIntervalToDatalyTotal) {
+      sendIntervalToDatalyTotal += sendIntervalToDataly
+      const h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
+      closeExec(resultJson, h, 'impression');
+    }
+  }, sendIntervalToDataly)
 
   // scrollの処理
   document.addEventListener(
     "scroll",
-    async (): Promise<void> => await scrollCkForReadrate(resultJson)
+    async (): Promise<void> => {
+      resultJson = await scrollCkForReadrate(resultJson)
+    }
   );
-
-  // click時の処理（今後実装）
-  // window.addEventListener("click", async(e: MouseEvent) => {
-  //   const clickJson = await clickDepth(e);
-  //   console.log("clickJson ---", clickJson, "resultJson ---",resultJson)
-  //   resultJson.ck.push(clickJson)
-  // })
 
   // タブ移動および画面遷移時の処理
   document.addEventListener(
     "visibilitychange",
     async (): Promise<void> => {
-      ({ resultJson, h, clienth } = await screenTransition(
-        resultJson,
-        h,
-        clienth
-      ));
+      sendIntervalToDatalyTotal = 0
+      resultJson = await screenTransition(resultJson);
     }
   );
 }
 
 main();
+// document.addEventListener('DOMContentLoaded',
+//   event => {
+//     main();
+//   },
+//   false
+// );
+
 export { main, scrollCkForReadrate, screenTransition };

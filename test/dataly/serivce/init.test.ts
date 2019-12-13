@@ -1,5 +1,5 @@
 import { init } from "../../../src/dataly/service/init";
-import {ur,pr,sl,st,resultjson} from "../../../src/dataly/domain/resultjson";
+import {ur,pr,sl,st,resultjson, sd} from "../../../src/dataly/domain/resultjson";
 import { storeInLocalStorage} from "../../../src/common/localstorage";
 
 describe('initのテスト', () => {
@@ -16,13 +16,17 @@ describe('initのテスト', () => {
 test('正常', async () => {
 
   // expectの準備
-  const expecth:number = 1000
-  const expectclienth:number = 100
-  const expectuser:ur = new ur(null, 0,"","http://localhost:8080/test.html", window.navigator.userAgent, null, Intl.DateTimeFormat().resolvedOptions().timeZone, null, null)
+  const expectuser:ur = new ur(null, null, 0,"","http://localhost:8080/test.html", window.navigator.userAgent, null, Intl.DateTimeFormat().resolvedOptions().timeZone, null, null)
   const expectpartner:pr = new pr("test","")
-  const expectstart: st = new st(expectclienth,'','',"test7",expecth,0)
+
+  const clienth = Math.floor(document.documentElement.clientHeight);
+  const h = Math.floor(document.documentElement.scrollHeight);
+  const scrollTop: number = Math.floor(document.documentElement.scrollTop);
+  const expectstart: st = new st(clienth, '', '', "test7", h, scrollTop)
+
   const expectscroll: sl = new sl(0,0,0)
-  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null)
+  const expectsendData:sd = new sd(null)
+  const expectresultjson: resultjson = new resultjson(expectuser,expectpartner,expectscroll, expectstart, null, expectsendData)
   const date = new Date();
   const expectDateJST: string = date.getFullYear()
   + '-' + ('0' + (date.getMonth() + 1)).slice(-2)
@@ -31,9 +35,20 @@ test('正常', async () => {
   + ':' + ('0' + date.getMinutes()).slice(-2);
 
   // exe
-  let actualResultjson = await init(expecth, expectclienth)
+  let actualResultjson = await init()
 
   // ck
+  expect(actualResultjson.ur.ad).toEqual(expectresultjson.ur.ad);
+  expect(actualResultjson.ur.cd).not.toBeNull;
+  expect(actualResultjson.ur.ao).toEqual(expectresultjson.ur.ao);
+  expect(actualResultjson.ur.rr).toEqual(expectresultjson.ur.rr);
+  expect(actualResultjson.ur.url).toEqual(expectresultjson.ur.url);
+  expect(actualResultjson.ur.ua).toEqual(expectresultjson.ur.ua);
+  expect(actualResultjson.ur.ip).toEqual(expectresultjson.ur.ip);
+  expect(actualResultjson.ur.zn).toEqual(expectresultjson.ur.zn);
+  expect(actualResultjson.ur.ac).toEqual(expectresultjson.ur.ac);
+  expect(actualResultjson.ur.ar).toEqual(expectresultjson.ur.ar);
+
   expect(actualResultjson.ed).toEqual(expectresultjson.ed);
   expect(actualResultjson.pr).toEqual(expectresultjson.pr);
   expect(actualResultjson.sl).toEqual(expectresultjson.sl);
@@ -41,6 +56,6 @@ test('正常', async () => {
   expect(actualResultjson.st.dl).toContain(expectDateJST);
   expect(actualResultjson.st.dt).toEqual(expectresultjson.st.dt);
   expect(actualResultjson.st.sp).toEqual(expectresultjson.st.sp);
-  expect(actualResultjson.ur).toEqual(expectresultjson.ur);
+  expect(actualResultjson.sd).toEqual(expectresultjson.sd);
   });
 });

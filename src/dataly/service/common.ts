@@ -40,23 +40,21 @@ async function pixelDepth(): Promise<sl> {
   return scrollJson;
 }
 
-// click位置の測定
-// async function clickDepth(e: MouseEvent): Promise<ck> {
-//   const X: number = e.pageX; //X座標
-//   const Y: number  = e.pageY; //Y座標
-//   return new ck(X, Y);
-// }
-
 /**
  * 認証が有効な場合、gaeにdatalyのデータを転送する。
  * @param resultJson
  * @param h
  */
-async function closeExec(resultJson: resultjson, h: number): Promise<void> {
-  // console.log("イベントタイプ--------------------", event.type);
+async function closeExec(resultJson: resultjson, h: number, type: string): Promise<void> {
   const [_, enddateLocal, enddateUtc, enddateJst] = await mkDateTime();
   const endJson: ed = new ed(enddateLocal, enddateUtc, enddateJst, h);
   resultJson.ed = endJson;
+  
+  // イベント発生タイプを記載
+  if ('click' !== resultJson.sd.tr){
+    resultJson.sd.tr = type
+  }
+
   // console.log("endに格納するJSON", endJson, "計測用のJSON最終形態", resultJson);
 
   const DATALYACCESSURL: string = process.env.DATALYACCESSURL;

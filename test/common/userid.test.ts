@@ -1,5 +1,4 @@
 import { storeInLocalStorage, getLocalStorage, removeLocalStorage } from "../../src/common/localstorage";
-import { getIdentifier } from "../../src/common/identifier";
 import { storeUid, getUid } from "../../src/common/userid";
 
 describe('useridの確認(getLocalStorage)', () => {

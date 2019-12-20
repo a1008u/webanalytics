@@ -1,7 +1,4 @@
-import { storeInLocalStorage } from "../../common/localstorage";
 import { resultjson } from "../domain/resultjson";
-import { at } from "../domain/resultjson";
-import { getIdentifier } from "../../common/identifier";
 
 interface HTMLElementEvent<A extends HTMLElement, I extends HTMLElement>
   extends Event {
@@ -20,19 +17,16 @@ let resultJsonGrobal: resultjson;
 function atRRCC(
   e: HTMLElementEvent<HTMLAnchorElement, HTMLImageElement>
 ): void {
-  // console.log("e.target - ", e.target)
-  // console.log("e.currentTarget - ", e.currentTarget)
-
-  // 識別子の取得（0の場合はatudの値がないところで遷移している）
-  const [_, targetDatalyIdentifier] = e.currentTarget.href
-    .match(/([&|?]atud=.*-)[0-9]*/g)
-    .pop()
-    .split("-");
-  resultJsonGrobal.ur.ir = targetDatalyIdentifier
-    ? Number(targetDatalyIdentifier)
-    : 0;
+  resultJsonGrobal.sd.tr = "click"
   resultJsonGrobal.ur.ac = e.currentTarget ? e.currentTarget.href : "";
   resultJsonGrobal.ur.ar = e.target && e.target.src ? e.target.src : "";
+  
+  // 識別子の取得（0の場合はatudの値がないところで遷移している）
+  const [_, , targetafiNo] = e.currentTarget.href
+    .match(/([&|?]atud=.*-.*-)[0-9]*/g)
+    .pop()
+    .split("-");
+  resultJsonGrobal.ur.ao = targetafiNo ? Number(targetafiNo): 0;
 }
 
 /**
@@ -64,19 +58,19 @@ function getQueryTargetKeyValue(
  * @param queryValue
  */
 async function changeAnchorQuery(
-  identifierKey: string,
   targetkey: string,
   queryKey: string,
   resultJson: resultjson
 ): Promise<void> {
   async function getAndChangeAtag(
     targetAtagHref: string,
-    identifier: number
+    afiNo: number
   ): Promise<string> {
-    const atudIdentifierQuery = `${queryKey}=${resultJson.ur.id}-${identifier}`;
+
+    const atudIdentifierQuery = `${queryKey}=${resultJson.ur.ad}-${resultJson.ur.cd}-${afiNo}`;
 
     // datalyパラメータ「?atud=datalyUserid-識別子」が存在する箇所の入れ替え
-    if (targetAtagHref.search(/([?])atud=.*-[0-9]{1,16}/g) != -1) {
+    if (targetAtagHref.search(/([?])atud=.*-.*-[0-9]{1,16}/g) != -1) {
       return targetAtagHref.replace(
         /([?])atud=.*-[0-9]{1,16}/g,
         `?${atudIdentifierQuery}`
@@ -84,7 +78,7 @@ async function changeAnchorQuery(
     }
 
     //  datalyパラメータ「&atud=datalyUserid-識別子」が存在する箇所の入れ替え
-    if (targetAtagHref.search(/([&])atud=.*-[0-9]{1,16}/g) != -1) {
+    if (targetAtagHref.search(/([&])atud=.*-.*-[0-9]{1,16}/g) != -1) {
       return targetAtagHref.replace(
         /([&])atud=.*-[0-9]{1,16}/g,
         `&${atudIdentifierQuery}`
@@ -119,7 +113,7 @@ async function changeAnchorQuery(
   const targetAtags: HTMLAnchorElement[] = [];
 
   // 識別子を取得
-  let identifier: number = await getIdentifier(identifierKey);
+  let afiNo: number = 0;
 
   // 対象のAtagのhrefにdatalyのパラメータを付与する
   for (let _i = 0; _i < document.getElementsByTagName("a").length; _i++) {
@@ -132,7 +126,7 @@ async function changeAnchorQuery(
         targetAtagHref.includes(`?${process.env.QUERYKEY}=`))
     ) {
       // アクトレのタグにdatalyのパラメータを設定
-      aTag.href = await getAndChangeAtag(targetAtagHref, ++identifier);
+      aTag.href = await getAndChangeAtag(targetAtagHref, ++afiNo);
       targetAtags.push(aTag);
       continue;
     }
@@ -144,9 +138,6 @@ async function changeAnchorQuery(
     aTag.removeEventListener("click", atRRCC);
     aTag.addEventListener("click", atRRCC);
   });
-
-  // 識別子をLocalStorageへ
-  storeInLocalStorage(identifierKey, String(identifier));
 }
 
 export { changeAnchorQuery, getQueryTargetKeyValue };

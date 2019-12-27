@@ -25,6 +25,7 @@ async function screenTransition(
   resultJson: resultjson,
 ): Promise<resultjson> {
   const visibilityState = document.visibilityState;
+  // sendBeaconでデータを通知する処理
   if (visibilityState === "hidden") {
     // console.log("イベントタイプ", event.type);
     const h = Math.floor(document.documentElement.scrollHeight); // ドキュメントの高さ
@@ -32,9 +33,9 @@ async function screenTransition(
     return resultJson;
   }
 
+  // 初期化の処理
   if (visibilityState === "visible") {
     // console.log("イベントタイプ", event.type);
-    // 識別子の取得
     resultJson = await init();
     changeAnchorQuery(
       process.env.DELIVERYURL,
@@ -90,7 +91,10 @@ async function main(): Promise<void> {
   );
 }
 
+// 実際の利用ではこちらのmainを使う
 main();
+
+// 開発でdataly.min.jsの実行用
 // document.addEventListener('DOMContentLoaded',
 //   event => {
 //     main();

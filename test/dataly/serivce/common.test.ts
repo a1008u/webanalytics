@@ -5,7 +5,7 @@ import { utcToZonedTime, format }  from 'date-fns-tz'
 describe('mkDateTimeのテスト', () => {
   test('正常_正確に時間が取れていることを確認', async () => {
     // test結果の準備
-    const DataAyformat = "Y-MM-dd HH:mm:ss.SSS";
+    const DataAyformat = "yyyy-MM-dd HH:mm:ss.SSS";
     const nowDate = new Date()
 
     // exe

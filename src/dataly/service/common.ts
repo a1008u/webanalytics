@@ -4,7 +4,7 @@ import { utcToZonedTime, format } from "date-fns-tz";
 // 作業時間を作成
 // 戻り値 [ゾーン, ゾーンから推測したlocalの時間, UTCの時間, JSTの時間]
 function mkDateTime(): string[] {
-  const DataAyformat = "Y-MM-dd HH:mm:ss.SSS";
+  const DataAyformat = "yyyy-MM-dd HH:mm:ss.SSS";
   const nowDate = new Date();
 
   // timeZone

@@ -1,5 +1,4 @@
 public
 node_modules
 src/aws.js
-package-lock.json
 coverage

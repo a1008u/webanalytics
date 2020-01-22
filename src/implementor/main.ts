@@ -65,7 +65,8 @@ async function implementor(
 }
 
 /**
- * 認証キーがある場合のみ実行
+ * ■起動時に実行
+ * 条件：認証キーとパートナーサイトidがある場合のみ実行
  */
 declare let __atinfo: AccessJson;
 if (__atinfo.Ay && __atinfo.Sd) {

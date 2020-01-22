@@ -3,11 +3,19 @@ version: "3"
 services:
   dataly_build_local_dev:
     build:
-      context: ./
+      context: ../../
       dockerfile: Dockerfile
     container_name: dataly_build_local_dev
     volumes:
       - ../../:/app
+    #   - ../../html:/app/html
+    #   - ../../src:/app/src
+    #   - ../../test:/app/test
+    #   - ../../webpack:/app/webpack
+    #   - ../../package-lock.json:/app/package-lock.json
+    #   - ../../package.json:/app/package.json
+    #   - ../../tsconfig.json:/app/tsconfig.json
     command: sh -c "
       npm i -f &&
-      npm run build_local_dev"
+      npm run build_local_dev &&
+      rm -rf ./node_modules"
